@@ -13,8 +13,8 @@
     "objectID": "index.html#why-pipelines",
     "href": "index.html#why-pipelines",
     "title": "Introduction to targets and geotargets",
-    "section": "6.1 Why Pipelines?",
-    "text": "6.1 Why Pipelines?\n\nWhere do I start? What do I run first?\nCommon problems with pipelines/workflows\nIntro to {targets}\nConcepts in {targets}: functions, targets, graphs/networks\nWhere we are going",
+    "section": "3.1 Why Pipelines?",
+    "text": "3.1 Why Pipelines?\n\nWhere do I start? What do I run first?\nCommon problems with pipelines/workflows\nIntro to {targets}\nConcepts in {targets}: functions, targets, graphs/networks\nWhere we are going",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to targets and geotargets</span>"
     ]
@@ -23,8 +23,8 @@
     "objectID": "index.html#starting-with-function-writing-out-a-workflow",
     "href": "index.html#starting-with-function-writing-out-a-workflow",
     "title": "Introduction to targets and geotargets",
-    "section": "6.2 Starting with function: writing out a workflow",
-    "text": "6.2 Starting with function: writing out a workflow\n\nDefining out functions as the unit of understanding\nIdeal properties of functions\nProperties to avoid in functions\nWriting out a workflow with functions\nUsing {fnmate} to accelerate function creation",
+    "section": "3.2 Starting with function: writing out a workflow",
+    "text": "3.2 Starting with function: writing out a workflow\n\nDefining out functions as the unit of understanding\nIdeal properties of functions\nProperties to avoid in functions\nWriting out a workflow with functions\nUsing {fnmate} to accelerate function creation",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to targets and geotargets</span>"
     ]
@@ -33,8 +33,8 @@
     "objectID": "index.html#debugging-functions",
     "href": "index.html#debugging-functions",
     "title": "Introduction to targets and geotargets",
-    "section": "6.3 Debugging functions",
-    "text": "6.3 Debugging functions\n\nbrower()\ndebug() and debugonce()\noptions(recover)",
+    "section": "3.3 Debugging functions",
+    "text": "3.3 Debugging functions\n\nbrower()\ndebug() and debugonce()\noptions(recover)",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to targets and geotargets</span>"
     ]
@@ -43,8 +43,8 @@
     "objectID": "index.html#getting-started-with-targets",
     "href": "index.html#getting-started-with-targets",
     "title": "Introduction to targets and geotargets",
-    "section": "6.4 Getting started with {targets}",
-    "text": "6.4 Getting started with {targets}\n\nUsing {tflow} to set up a targets project\n\nUnpacking folder structure, _targets.R file\nUsing functions for pipeline steps\nUsing tar_assign()\n\nYour first pipeline\nModifying and rebuilding: understanding what changes",
+    "section": "3.4 Getting started with {targets}",
+    "text": "3.4 Getting started with {targets}\n\nUsing {tflow} to set up a targets project\n\nUnpacking folder structure, _targets.R file\nUsing functions for pipeline steps\nUsing tar_assign()\n\nYour first pipeline\nModifying and rebuilding: understanding what changes",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to targets and geotargets</span>"
     ]
@@ -53,8 +53,8 @@
     "objectID": "index.html#deeper-workflow-with-targets",
     "href": "index.html#deeper-workflow-with-targets",
     "title": "Introduction to targets and geotargets",
-    "section": "6.5 Deeper workflow with {targets}",
-    "text": "6.5 Deeper workflow with {targets}\n\nData read in with tar_read()\nRendering reports with tar_quarto()\nUsing keyboard shortcuts to load, inspect\nUsing tar_workspaces() to debug issues\nCommon problems when writing pipelines",
+    "section": "3.5 Deeper workflow with {targets}",
+    "text": "3.5 Deeper workflow with {targets}\n\nData read in with tar_read()\nRendering reports with tar_quarto()\nUsing keyboard shortcuts to load, inspect\nUsing tar_workspaces() to debug issues\nCommon problems when writing pipelines",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to targets and geotargets</span>"
     ]
@@ -63,8 +63,8 @@
     "objectID": "index.html#advanced-targets-features",
     "href": "index.html#advanced-targets-features",
     "title": "Introduction to targets and geotargets",
-    "section": "6.6 Advanced Targets Features",
-    "text": "6.6 Advanced Targets Features\n\nUsing {crew} to paralellise workflow\nBranching\nUsing targets with HPC",
+    "section": "3.6 Advanced Targets Features",
+    "text": "3.6 Advanced Targets Features\n\nUsing {crew} to paralellise workflow\nBranching\nUsing targets with HPC",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to targets and geotargets</span>"
     ]
@@ -73,8 +73,8 @@
     "objectID": "index.html#introduction-to-geospatial-data",
     "href": "index.html#introduction-to-geospatial-data",
     "title": "Introduction to targets and geotargets",
-    "section": "6.7 Introduction to Geospatial Data",
-    "text": "6.7 Introduction to Geospatial Data\n\nSpatial data challenges\nIntroduction to {terra} and {sf}",
+    "section": "3.7 Introduction to Geospatial Data",
+    "text": "3.7 Introduction to Geospatial Data\n\nSpatial data challenges\nIntroduction to {terra} and {sf}",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to targets and geotargets</span>"
     ]
@@ -83,8 +83,8 @@
     "objectID": "index.html#geospatial-pipelines-with-geotargets",
     "href": "index.html#geospatial-pipelines-with-geotargets",
     "title": "Introduction to targets and geotargets",
-    "section": "6.8 Geospatial Pipelines with {geotargets}",
-    "text": "6.8 Geospatial Pipelines with {geotargets}\n\nWhy {geotargets}?\ntar_terra_rast(), tar_terra_vect(), etc\nBuilding a geospatial pipeline",
+    "section": "3.8 Geospatial Pipelines with {geotargets}",
+    "text": "3.8 Geospatial Pipelines with {geotargets}\n\nWhy {geotargets}?\ntar_terra_rast(), tar_terra_vect(), etc\nBuilding a geospatial pipeline",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to targets and geotargets</span>"
     ]
@@ -93,8 +93,8 @@
     "objectID": "index.html#production-workflows-and-best-practices",
     "href": "index.html#production-workflows-and-best-practices",
     "title": "Introduction to targets and geotargets",
-    "section": "6.9 Production Workflows and Best Practices",
-    "text": "6.9 Production Workflows and Best Practices\n\nOrganising large projects\nConvert your own work into a pipeline\nFeedback on your pipeline\nResources and next steps\nOpen Q&A",
+    "section": "3.9 Production Workflows and Best Practices",
+    "text": "3.9 Production Workflows and Best Practices\n\nOrganising large projects\nConvert your own work into a pipeline\nFeedback on your pipeline\nResources and next steps\nOpen Q&A",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to targets and geotargets</span>"
     ]
