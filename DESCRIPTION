@@ -22,3 +22,5 @@ Imports:
   tidyverse,
   tarchetypes,
   visNetwork
+URL: https://github.com/njtierney/gentletargets
+BugReports: https://github.com/njtierney/gentletargets/issues
