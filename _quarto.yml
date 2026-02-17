@@ -1,0 +1,26 @@
+project: 
+  type: book
+  output-dir: docs
+
+book:
+  title: "Introduction to targets and geotargets"
+  author: "Nicholas Tierney"
+  site-url: https://gentle-targets.njtierney.com
+  repo-url: https://https://github.com/njtierney/gentletargets
+  repo-branch: main
+  repo-actions: [edit, issue]
+  date: "2026-02-17"
+  page-footer: "Copyright 2026, Nicholas Tierney" 
+  page-navigation: true
+  search: true
+  chapters:
+    - "index.qmd"
+
+format:
+  html:
+    theme: 
+      - cosmo
+    code-background: true
+    code-copy: true
+    code-overflow: wrap
+    toc: true

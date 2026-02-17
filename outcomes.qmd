@@ -1,0 +1,17 @@
+# Prerequisites
+
+- Experience writing basic R scripts
+- Familiarity with writing functions in R
+- Experience with spatial data packages (terra, sf) helpful but not required
+- Experience in writing your own data analysis
+
+# Learning outcomes
+
+- Understand benefits of using a pipeline approach like {targets}
+- How to write functions that work in a pipeline
+- How to debug common pipeline issues
+- How to use {targets} with {geotargets}
+
+# Course website
+
+<https://gentle-targets.njtierney.com>

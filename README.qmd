@@ -1,0 +1,21 @@
+---
+title: Introduction to `targets` and `geotargets`
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+    fig.path: "man/figures/README-"
+    out.width: "100%"
+format: gfm
+---
+
+<!-- README.md is generated from README.qmd. Please edit that file -->
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+{{< include outcomes.qmd >}}
+
+{{< include details.qmd >}}
+
+{{< include schedule.md >}}

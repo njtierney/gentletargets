@@ -1,0 +1,15 @@
+---
+title: "Introduction to targets and geotargets"
+---
+
+# Welcome
+
+Welcome to targets and geotargets! This course will teach you how to build reproducible computational pipelines for data analysis and geospatial workflows.
+
+# Course Materials
+
+Materials will be added here as we progress through the course.
+
+{{< include outcomes.qmd >}}
+
+{{< include schedule.md >}}
