@@ -1,0 +1,48 @@
+// HOUSE STYLE - what things MEAN. This is the opinionated layer.
+//
+// Everything here is Nick Tierney's convention for teaching material,
+// not a general truth. An extension should ship the structure and
+// palette layers; this one is a choice each project makes.
+
+/*-- scss:defaults --*/
+
+// The block overhangs the column by ~32px and the copy button parks
+// beyond it. Quarto's default gap to the floating table of contents is
+// 1.5em (26-28px), which collides. This changes the page grid, which is
+// why it lives here and not in the structure layer.
+$grid-column-gutter-width: 3em !default;
+
+/*-- scss:rules --*/
+
+// ── Callout semantics ────────────────────────────────────────
+// Each of Quarto's five built-in types gets one fixed job, so a reader
+// can learn them in ten minutes and then navigate by colour.
+//
+// Mapping the built-in types is the only way that works: Quarto strips
+// unrecognised classes off a callout div, so `.callout-note .is-turn`
+// never reaches the HTML.
+.callout-note      { --cl: var(--measured-fill-1); --ct: var(--measured-text-1); }  // Your Turn
+.callout-caution   { --cl: var(--measured-fill-2); --ct: var(--measured-text-2); }  // Some history
+.callout-tip       { --cl: var(--measured-fill-3); --ct: var(--measured-text-3); }  // Going deeper
+.callout-warning   { --cl: var(--measured-fill-4); --ct: var(--measured-text-4); }  // Watch out
+.callout-important { --cl: var(--measured-fill-5); --ct: var(--measured-text-5); }  // This will bite you
+
+// Emoji markers, one CSS line each. They never fail to load, and they
+// survive copy and paste. Delete these five rules for plain coloured
+// titles.
+.callout-note .callout-title-container::before      { content: "✏️  "; }
+.callout-caution .callout-title-container::before   { content: "🕰️  "; }
+.callout-tip .callout-title-container::before       { content: "🔎  "; }
+.callout-warning .callout-title-container::before   { content: "⚠️  "; }
+.callout-important .callout-title-container::before { content: "🚨  "; }
+
+// ── Heading rhythm ───────────────────────────────────────────
+// Space above a heading must clearly exceed space below, so a heading
+// binds to what it introduces. Bootstrap has these roughly symmetric,
+// which reads as floating between two sections.
+h2, h3, h4 { margin-top: 2.4rem; margin-bottom: 0.8rem; }
+h2 + h3, h3 + h4 { margin-top: 1.4rem; }
+
+// A sticky navbar otherwise covers the heading you just clicked to in
+// the table of contents. A real problem when teaching live.
+:target, h1, h2, h3, h4 { scroll-margin-top: 5rem; }

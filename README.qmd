@@ -6,7 +6,9 @@ knitr:
     comment: '#>'
     fig.path: "man/figures/README-"
     out.width: "100%"
-format: gfm
+format:
+  gfm:
+    wrap: none
 ---
 
 <!-- README.md is generated from README.qmd. Please edit that file -->

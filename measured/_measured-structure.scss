@@ -1,0 +1,373 @@
+// STRUCTURE - geometry and shape. No colours, no meanings.
+//
+// Everything here is generic: it would suit any project that wants code
+// blocks whose text lines up with the prose. Colour comes from the
+// palette layer, meaning from the house layer.
+
+/*-- scss:defaults --*/
+
+// How many characters a code block should hold. 80 because that is what
+// `air` produces by default. Change it if your formatter differs.
+$measured-code-cols: 80 !default;
+
+// Selector these rules are scoped to. Quarto's HTML document layout
+// wraps content in <main>. Set this to something else - `.reveal`,
+// `body` - for a layout that does not have one.
+$measured-scope: main !default;
+
+// Number a code block only once it has at least this many lines. On a
+// one or two line block the number is decoration: the point of
+// numbering is being able to say "look at line 12", which needs enough
+// lines to point at. Set to 1 to number everything, or a large number
+// to number nothing.
+$measured-number-from: 4 !default;
+
+$code-block-font-size: 15px !default;
+
+// Size of printed output - what R sends back, not what you type.
+// Deliberately a shade under the code size: the code is the thing the
+// reader types, the output is the response to it, and the hierarchy
+// should say so.
+//
+// Quarto does NOT style `.cell-output pre` as a code block, so without
+// this it inherits the BODY font size. Measured in a browser: output
+// came out at 16.875px against the code block's 15px, so the response
+// was 12.5% LARGER than the call that produced it.
+$measured-output-font-size: 14px !default;
+
+/*-- scss:rules --*/
+
+// Ligatures OFF. Fira Code and JetBrains Mono ship them under `calt`,
+// so `font-variant-ligatures: none` alone does NOT switch them off.
+// Without this, |> renders as a solid triangle and <- as an arrow, and
+// a learner cannot tell which keys to press.
+code, pre, .sourceCode, kbd {
+  font-feature-settings: "calt" 0, "liga" 0, "clig" 0, "dlig" 0;
+  font-variant-ligatures: none;
+}
+
+pre { line-height: 1.5; }
+
+// ── Code block geometry ──────────────────────────────────────
+//
+//     block edge | gutter | rule | pad | code text ...
+//                                       ^ flush with the prose
+//
+// `ch` is the width of "0" in the current font, so in a monospace
+// context `80ch` IS eighty characters and a three digit line number is
+// `3ch`. No font measuring, and it follows the font if you change it.
+//
+// margin-right is deliberately ZERO. Sizing it with
+// `calc(100% - 80ch - ...)` makes the block a FIXED width, because the
+// `100%` cancels the container - it looked right at 1400px and spilled
+// 201px over the table of contents at 1000px.
+
+// The font context and the variables must reach the copy button, which
+// is a SIBLING of the block, not a child. Declared only on the block,
+// `var(--pad-r)` is undefined on the button, the calc() silently
+// becomes invalid, and `right` falls back to `auto` - putting the
+// button on the far left.
+#{$measured-scope} .code-copy-outer-scaffold,
+#{$measured-scope} div.sourceCode {
+  font-family: var(--bs-font-monospace);
+  font-size: $code-block-font-size;
+
+  --cols:      #{$measured-code-cols};
+  --gutter:    4ch;     // 3 digits + right padding, so line 100 fits
+  --pad:       0.25ch;  // rule to code
+  --pad-r:     1ch;     // code to right edge
+  --edge:      1px;
+  --copy-gap:  10px;    // block edge to the parked copy button
+
+  // Empirical corrections, not derived from the box model. Tuned
+  // against Fira Code at 15px - change the mono face and these want
+  // re-measuring in a browser rather than trusting.
+  --nudge:     4px;     // whole block, so code lines up with the prose
+  --num-nudge: 1px;     // extra gap between the numbers and the rule
+
+  margin-left:  calc(-1 * (var(--gutter) + var(--pad) + 2 * var(--edge) + var(--nudge)));
+  margin-right: 0;
+}
+
+// When a copy button exists, its scaffold carries the breakout so the
+// button's `right: 0` means the block's right edge, not the column's.
+#{$measured-scope} .code-copy-outer-scaffold > div.sourceCode {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#{$measured-scope} div.sourceCode {
+  // Quarto builds its annotation line highlight as a div with
+  // `position: absolute; left: 0; width: 100%`, so it resolves against
+  // the nearest POSITIONED ancestor. Without this the block is not one,
+  // and the highlight lands offset from the code it marks. Same for
+  // Quarto's `.code-annotation-gutter-bg`, which is `right: 0`.
+  position: relative;
+
+  background: var(--code-bg);
+  border: var(--edge) solid var(--code-edge);
+  border-radius: var(--code-radius);
+
+  // A line past the limit must SCROLL, not vanish. `overflow: hidden`
+  // sets BOTH axes and silently truncates, far worse than a scrollbar.
+  // The block is the scroll container rather than the <pre>, because
+  // the numbers are painted in the gutter made by the pre's own margin,
+  // outside the pre's box - a scrolling <pre> would clip them.
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+#{$measured-scope} div.sourceCode pre {
+  background: transparent;
+  border: none;
+  overflow: visible !important;
+  padding: 0.5rem var(--pad-r) 0.5rem var(--pad);
+}
+
+// ── Plain fenced blocks ──────────────────────────────────────
+// A fence with no language - ```` ``` ```` rather than ```` ```r ```` -
+// gets NO `div.sourceCode` wrapper, so every rule above misses it and
+// it falls back to the BODY font size. Measured: 16.875px against the
+// code blocks' 15px.
+//
+// These are not output, they are content: file paths, directory trees,
+// a bare filename, terminal transcripts. So they take the code size
+// rather than the smaller output size.
+//
+// They keep `white-space: pre`. A directory tree and a linter's caret
+// ruler are both drawn with spaces, and wrapping them destroys the
+// alignment that is the entire point. Long ones scroll instead.
+//
+// Watch the specificity. `pre:not(.sourceCode):not(.numberSource)` is
+// (0,2,1) - each `:not()` argument counts as a class - which BEATS a
+// plain `.cell-output > pre` at (0,1,1). Written that way, this rule
+// silently overrode the output font size and put it back to 15px. The
+// output rules below therefore carry the same `:not()`s to outrank it.
+// The tint here also lands on printed output, because output is a
+// classless <pre> too and so matches this selector. That is deliberate:
+// every monospace block on the page gets the same faint background, so
+// the reader can tell at a glance that a block is not prose. The colours
+// are the same derived ones the code blocks use, so this follows a light
+// or dark base without being told which.
+#{$measured-scope} pre:not(.sourceCode):not(.numberSource) {
+  font-family: var(--bs-font-monospace);
+  font-size: $code-block-font-size;
+  overflow-x: auto;
+
+  background: var(--code-bg);
+  border: 1px solid var(--code-edge);
+  border-radius: var(--code-radius);
+
+  // Padding mirrors `div.sourceCode pre` so the text inside a plain
+  // block sits on the same left edge as the text inside a code block,
+  // and both line up with the prose. A roomier padding here looked
+  // fine in isolation and was visibly indented next to a code block.
+  //
+  // The negative margin is what puts the TEXT rather than the BORDER on
+  // the prose edge. It also buys back the width the padding costs: with
+  // 0.75rem padding and no breakout, a 56-character file path scrolled
+  // at a 1000px viewport - 531px of content in 519px of column.
+  padding: 0.5rem 1ch 0.5rem 0.25ch;
+  margin-left: calc(-1 * (0.25ch + 1px));
+}
+
+// ── Printed output ───────────────────────────────────────────
+// `.cell-output > pre` is a plain <pre>, NOT inside a
+// `div.sourceCode`, so none of the code-block rules above reach it.
+// It needs its own font size, and it wraps rather than scrolls.
+//
+// Wrapping is the opposite of the decision made for source code, and
+// for a reason. Not wrapping code protects the indentation that shows
+// the shape of a pipeline. Output has no indentation to protect, and a
+// horizontal scrollbar on an error message is worse than a wrapped
+// line - the reader has to drag a box sideways to find out what went
+// wrong.
+//
+// Measured before writing this: at a 1000px viewport the error output
+// from a failed `read.csv()` was 713px wide in 519px of space, so it
+// scrolled. Its longest line is 70 characters, well under the limit -
+// the overflow came from the font size, not the content.
+#{$measured-scope} .cell-output > pre:not(.sourceCode):not(.numberSource) {
+  font-family: var(--bs-font-monospace);
+  font-size: $measured-output-font-size;
+
+  // `ch` resolves against THIS element's font size, so this is 80
+  // characters of output, not 80 characters of code. Output is set
+  // smaller, so it wraps a little short of the code block's right
+  // edge, which reads as deliberate rather than ragged.
+  max-width: #{$measured-code-cols}ch;
+
+  white-space: pre-wrap;
+
+  // A safety net, not a normal case. `pre-wrap` breaks at spaces, so a
+  // single unbroken token longer than the limit - a URL, a long file
+  // path - would still overflow. Kept as a scrollbar rather than
+  // `break-word` because breaking a path mid-character makes it
+  // impossible to copy correctly.
+  overflow-x: auto;
+}
+
+// The inner <code> carries its own `white-space: pre`, which BEATS the
+// value inherited from the <pre>. Setting wrapping on the parent alone
+// does nothing: measured at a 1000px viewport, the <pre> reported
+// `pre-wrap` while its <code> reported `pre` and still overflowed by
+// 74px. Both elements have to be told.
+#{$measured-scope} .cell-output > pre > code {
+  white-space: pre-wrap;
+}
+
+// ── Line numbers ─────────────────────────────────────────────
+// Quarto emits its line-numbering CSS in a page-level <style> block,
+// which lands after the theme stylesheet, so these need !important.
+#{$measured-scope} pre.numberSource {
+  margin-left: var(--gutter) !important;
+  padding-left: var(--pad) !important;
+  border-left: var(--edge) solid var(--code-edge) !important;
+}
+
+// The number must stay IN FLOW as an inline-block. Position it
+// absolutely and a blank line - whose span then has no in-flow content
+// - collapses, leaving a gap mid-block.
+//
+// But an inline-block ADDS its width to the line's layout width, making
+// a line of exactly N characters overflow by the gutter width.
+// `margin-left: -gutter` cancels the advance: the box occupies
+// [-gutter, 0] and contributes ZERO width.
+#{$measured-scope} pre.numberSource code > span {
+  left: 0 !important;
+}
+#{$measured-scope} pre.numberSource code > span > a:first-child::before {
+  position: relative !important;
+  display: inline-block !important;
+  width: var(--gutter) !important;
+  margin-left: calc(-1 * var(--gutter)) !important;
+  left: calc(-1 * (var(--pad) + var(--edge))) !important;
+  padding: 0 calc(0.6ch + var(--num-nudge)) 0 0 !important;
+  text-align: right;
+  color: var(--code-num) !important;
+}
+
+// ── Copy button ──────────────────────────────────────────────
+// Sits in the top right corner INSIDE the code block, invisible until
+// the block is hovered.
+//
+// It used to be parked out in the right margin with a translateX, which
+// kept it clear of long lines. That broke inside callouts: `.callout`
+// sets `overflow: hidden` to clip its own rounded corners, so anything
+// pushed past the block's right edge was clipped away and the button
+// vanished. Keeping it inside the box means it cannot be clipped,
+// wherever the block happens to live.
+#{$measured-scope} .code-copy-outer-scaffold > .code-copy-button {
+  position: absolute;
+  top: 2px !important;
+  right: 2px !important;
+  margin: 0 !important;
+  transform: none;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+#{$measured-scope} .code-copy-outer-scaffold:hover > .code-copy-button,
+#{$measured-scope} .code-copy-outer-scaffold > .code-copy-button:focus-visible {
+  opacity: 1;
+}
+
+// Code inside a callout stays inside its box.
+#{$measured-scope} .callout div.sourceCode,
+#{$measured-scope} .callout pre,
+#{$measured-scope} .callout .code-copy-outer-scaffold {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+// The block and the parked button hang outside the content column, so
+// nothing in the chain may clip them.
+#{$measured-scope}, .page-columns, #quarto-document-content {
+  overflow: visible;
+}
+
+// ── Callout shape ────────────────────────────────────────────
+// Shape only. Which colour, and what each type MEANS, is the house
+// layer's business.
+//
+// `!important` on the borders is load-bearing: Bootswatch themes set
+// their own per-type colour at `div.callout-note.callout`, specificity
+// (0,2,1), which beats a plain `.callout` rule.
+.callout {
+  border: 1px solid color-mix(in srgb, var(--cl) 30%, var(--bs-body-bg, white)) !important;
+  border-left: 5px solid var(--cl) !important;
+  border-radius: 8px;
+  box-shadow: none;
+  overflow: hidden;
+}
+.callout .callout-header {
+  background: color-mix(in srgb, var(--cl) 9%, var(--bs-body-bg, white)) !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--cl) 20%, var(--bs-body-bg, white));
+  padding: 0.5rem 0.9rem;
+}
+.callout .callout-title-container { color: var(--ct); font-weight: 700; }
+.callout .callout-icon-container  { display: none; }
+.callout .callout-body            { padding: 0.9rem; }
+
+
+// ── Countdown timers in callouts ─────────────────────────────
+// {countdown} ships `.countdown { position: absolute }` with `right: 0;
+// bottom: 0`. That is right for slides and wrong here: nothing between
+// the timer and the page is positioned, so an absolute timer skips the
+// callout it was written in and pins itself to the corner of the
+// viewport.
+//
+// This is the same thing countdown's own `.inline` class does, applied
+// to every timer in a callout so a chapter can just call
+// `countdown(minutes = 5)`. Two classes against countdown's one, so it
+// wins on specificity whichever stylesheet loads first.
+//
+// `width: max-content` is not optional. Without it the timer stretches
+// the full width of the callout body and the digits swim in the middle
+// of a very wide green box.
+//
+// The `right`/`bottom` countdown writes into the element's own `style`
+// survive this and are harmless: on a relative box they are offsets of
+// zero, and no stylesheet can beat an inline style anyway.
+.callout .countdown {
+  position: relative;
+  width: max-content;
+  max-width: 100%;
+
+  // countdown reads this with a 3rem fallback, which is sized for a
+  // slide seen from the back of a room, not a paragraph.
+  --countdown-font-size: 2rem;
+}
+
+
+// ── Short blocks are not numbered ────────────────────────────
+// On a one or two line block the number is decoration. The value of
+// numbering is being able to say "look at line 12", which needs enough
+// lines to point at.
+//
+// `:has()` with `:nth-of-type()` is how CSS asks "does this block have
+// at least N lines". `nth-of-type` and not `nth-child`, because an
+// annotated block puts its anchors in as siblings of the line spans,
+// which makes `nth-child` count them and misfire.
+//
+// The code text stays flush with the prose either way. Only the
+// overhang changes, so the left edge does not jump between a short
+// block and a long one.
+#{$measured-scope} .code-copy-outer-scaffold:not(:has(pre code > span:nth-of-type(#{$measured-number-from}))),
+#{$measured-scope} div.sourceCode:not(:has(pre code > span:nth-of-type(#{$measured-number-from}))) {
+  // -8px is measured, not derived: at margin-left 0 the code sat 8px
+  // right of the prose.
+  margin-left: -8px;
+}
+// When a scaffold is present it carries the offset, so the block inside
+// must not apply it a second time - otherwise the two compound and the
+// code lands 8px the other side of the prose.
+#{$measured-scope} .code-copy-outer-scaffold > div.sourceCode:not(:has(pre code > span:nth-of-type(#{$measured-number-from}))) {
+  margin-left: 0;
+}
+#{$measured-scope} div.sourceCode:not(:has(pre code > span:nth-of-type(#{$measured-number-from}))) pre.numberSource {
+  margin-left: 0 !important;
+  border-left: none !important;
+}
+#{$measured-scope} div.sourceCode:not(:has(pre code > span:nth-of-type(#{$measured-number-from}))) pre.numberSource code > span > a:first-child::before {
+  display: none !important;
+}

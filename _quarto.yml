@@ -1,6 +1,20 @@
-project: 
+project:
   type: book
   output-dir: docs
+  # The whole analysis is zipped and copied into docs/, so it is downloadable
+  # straight from gentle-targets.njtierney.com/download/. A plain HTTPS download
+  # from the course site people are already reading beats cloning a repo on the
+  # day. pre-render rebuilds the zip every time, so it cannot drift.
+  pre-render: build-download.R
+  resources:
+    - download/
+
+# Applied to every chapter. linkate collects each chapter's links and lists them
+# at the end. overview-box.lua is the LaTeX half of the chapter overview box and
+# is a no-op in HTML, where chapter-overview.scss does the work.
+filters:
+  - linkate
+  - overview-box.lua
 
 book:
   title: "Introduction to targets and geotargets"
@@ -15,12 +29,30 @@ book:
   search: true
   chapters:
     - "index.qmd"
+    - "setup.qmd"
+    - "why-pipelines.qmd"
+    - "starting-with-functions.qmd"
+
+# Only `##` and above get a number.
+number-depth: 2
+
+# Every chunk runs inside toad-analysis/, so the paths a chapter shows are the
+# paths a reader types. Without this the book would have to write
+# toad-analysis/data/... while telling people to write data/...
+knitr:
+  opts_knit:
+    root.dir: toad-analysis
 
 format:
   html:
-    theme: 
+    theme:
       - cosmo
-    code-background: true
+      - measured/_measured-palette.scss    # Dark2 colours
+      - measured/_measured-structure.scss  # code blocks, callout shape
+      - measured/_measured-house.scss      # what each callout type means
+      - measured/measured-legible.scss     # Atkinson Hyperlegible + Fira Code
+      - book-grid.scss                     # book column is narrower than a website
+      - chapter-overview.scss              # the box each chapter opens with
     code-copy: true
-    code-overflow: wrap
+    code-line-numbers: true
     toc: true

@@ -10,3 +10,14 @@ docs
 *.pdf
 *.tex
 *.toc
+
+# Quarto render output
+libs/
+*_files/
+*.html
+
+**/*.quarto_ipynb
+
+
+toad-analysis/output
+download

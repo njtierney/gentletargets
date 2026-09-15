@@ -1,0 +1,83 @@
+// PALETTE - colour only. No geometry, no semantics.
+//
+// Two things live here: the Dark2 role colours, and the code block
+// colours. Both are exposed as CSS custom properties so the structure
+// layer never contains a colour literal.
+
+/*-- scss:defaults --*/
+
+// ── RColorBrewer Dark2 ───────────────────────────────────────
+// `RColorBrewer::brewer.pal(8, "Dark2")` - qualitative, and
+// `brewer.pal.info` records it as colourblind safe. That is the reason
+// to use it: the design asks readers to navigate by colour, so the
+// colour has to work for readers with colour vision deficiency.
+//
+// Dark2 is a FILL palette. Measured against white, only the grey clears
+// WCAG AA (4.5:1) for body-size text:
+//
+//   #1B9E77 3.39   #D95F02 3.76   #7570B3 4.44   #E7298A 4.13
+//   #66A61E 2.98   #E6AB02 2.06   #A6761D 4.01   #666666 5.74 ✓
+//
+// So each role carries two values. FILL is Dark2 untouched, for borders
+// and tints where contrast rules do not apply. TEXT is the same hue
+// darkened until it clears 4.5:1, for titles.
+$measured-fill-1: #1B9E77 !default;   // green
+$measured-fill-2: #666666 !default;   // grey
+$measured-fill-3: #7570B3 !default;   // purple
+$measured-fill-4: #D95F02 !default;   // orange
+$measured-fill-5: #E7298A !default;   // magenta
+
+$measured-text-1: #178665 !default;   // 4.53:1 on white
+$measured-text-2: #666666 !default;   // 5.74:1
+$measured-text-3: #736EB2 !default;   // 4.56:1
+$measured-text-4: #C25502 !default;   // 4.57:1
+$measured-text-5: #E0197F !default;   // 4.55:1
+
+// Lightened for a dark background (measured against #1C2128).
+$measured-dark-1: #1B9E77 !default;   // already 4.78:1, unchanged
+$measured-dark-2: #878787 !default;
+$measured-dark-3: #8581BC !default;
+$measured-dark-4: #E16202 !default;
+$measured-dark-5: #EA479A !default;
+
+/*-- scss:rules --*/
+
+// Code block colours are DERIVED from the base theme rather than
+// hardcoded, so the theme works on a light or a dark base without
+// being told which. Hardcoding them was a real bug: on `darkly` the
+// code blocks stayed white while the page went dark.
+:root {
+  --code-bg:     color-mix(in srgb, var(--bs-body-bg, white) 97%, var(--bs-body-color, black));
+  --code-edge:   color-mix(in srgb, var(--bs-body-bg, white) 88%, var(--bs-body-color, black));
+  --code-num:    color-mix(in srgb, var(--bs-body-bg, white) 45%, var(--bs-body-color, black));
+  --code-radius: 6px;
+}
+
+// Role colours as custom properties. The house layer decides which
+// callout type gets which role; this layer only says what the colours
+// are and guarantees they are readable.
+:root {
+  --measured-fill-1: #{$measured-fill-1};
+  --measured-fill-2: #{$measured-fill-2};
+  --measured-fill-3: #{$measured-fill-3};
+  --measured-fill-4: #{$measured-fill-4};
+  --measured-fill-5: #{$measured-fill-5};
+
+  --measured-text-1: #{$measured-text-1};
+  --measured-text-2: #{$measured-text-2};
+  --measured-text-3: #{$measured-text-3};
+  --measured-text-4: #{$measured-text-4};
+  --measured-text-5: #{$measured-text-5};
+}
+
+// On a dark page the darkened title colours are the wrong way round,
+// so swap in the lightened set.
+@media (prefers-color-scheme: dark) {
+  :root {
+    --measured-text-1: #{$measured-dark-1};
+    --measured-text-2: #{$measured-dark-2};
+    --measured-text-3: #{$measured-dark-3};
+    --measured-text-4: #{$measured-dark-4};
+    --measured-text-5: #{$measured-dark-5};
+  }
+}

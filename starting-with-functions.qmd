@@ -1,0 +1,279 @@
+# Starting with functions {#sec-functions}
+
+Last session you had a script that gave three different answers and no way to tell which one was on disk. This session we take it apart. Not to make it prettier, but because you cannot reason about what depends on what until the steps have names.
+
+::: {.overview}
+
+## Overview {.unnumbered}
+
+**Duration** 60 minutes
+
+**Questions**
+
+<!-- These map onto the sections below, in order. If you move a section, move its question. -->
+
+- What is actually in my script, and what is loose?
+- How do I decide what the steps are before I write them?
+- What does a good function look like?
+- What does a function look like when it has gone wrong?
+- How do I stop typing function skeletons by hand?
+
+**What you need this session**
+
+- A session of RStudio open
+- `analysis.R` and the `R/` folder from last session
+- `{fnmate}` installed, if it would install. See [Setup](setup.qmd).
+
+:::
+
+```{r}
+#| label: setup
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(arrow)
+library(broom)
+for (f in list.files("R", full.names = TRUE)) source(f)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", message = FALSE)
+```
+
+## The boss sent the rest
+
+Before we start, the 2000s turned up. Change one line.
+
+```r
+toad_path <- "data/cane-toad-all.parquet"
+```
+
+Everything still works, which is the useful thing about having built it once already.
+
+## The script we have
+
+Here is `analysis.R` as it stands.
+
+```r
+occurrences_raw <- read_occurrences(toad_path)
+
+occurrences_clean <- clean_occurrences(occurrences_raw)
+
+toad_front <- front_by_decade(occurrences_clean)
+
+speed <- lm(west_reached ~ decade, data = toad_front)
+km_per_year <- -coef(speed)[["decade"]] * 107
+
+cat("front speed:", round(km_per_year, 1), "km per year\n")
+write_csv(toad_front, "output/toad-front.csv")
+```
+
+Some of that is functions doing named jobs, and some of it is loose code doing unnamed ones.
+
+Look at those two middle lines. They fit a model, pull one number out of it, flip its sign, and multiply by 107. What are they called?
+
+They aren't called anything, and that matters, because last session you spent ten minutes working out by hand which parts of this script depended on which other parts, and the parts without names were the hard ones.
+
+::: {.callout-note title="Your Turn"}
+
+Read the script and write down, in plain English, the jobs it does rather than the lines it has.
+
+1. How many did you get?
+2. How many have names already?
+
+:::
+
+## Write the workflow first
+
+Here is the habit I want you to leave with today.
+
+Before you write any of it, write down the steps as calls to functions that don't exist yet.
+
+```r
+occurrences_raw   <- read_occurrences("data/cane-toad-all.parquet")
+occurrences_clean <- clean_occurrences(occurrences_raw)
+toad_front        <- front_by_decade(occurrences_clean)
+front_model       <- fit_front(toad_front)
+speed             <- front_speed(front_model)
+```
+
+None of those bodies are written. `front_speed()` doesn't exist at all. That's fine, and it is the point of doing it this way round: you are deciding what the steps are, before you get distracted by how any of them work.
+
+Notice the names, because they follow a rule worth stealing.
+
+**Functions are verbs. The things they make are nouns.** `read_occurrences()` is a thing you do, and `occurrences_raw` is a thing you have. Read a workflow written this way and you learn the shape of the analysis from the nouns, and what happens to it from the verbs.
+
+::: {.callout-note title="Your Turn"}
+
+Write out your own analysis this way. Just the calls, no bodies, ten minutes.
+
+1. Are your names verbs and nouns?
+2. Did you find a step you could not name? That is usually two jobs hiding in one.
+
+:::
+
+## What a good function looks like
+
+Neither of the last two steps exists yet, so let's write them and see what's going on.
+
+```{r}
+#| label: fit-front
+fit_front <- function(front) {
+  lm(west_reached ~ decade, data = front)
+}
+```
+
+```{r}
+#| label: front-speed
+front_speed <- function(model, km_per_degree = 107) {
+  slope <- broom::tidy(model) |>
+    filter(term == "decade") |>
+    pull(estimate)
+
+  -slope * km_per_degree
+}
+```
+
+Two functions rather than one, and that split is deliberate. Fitting a model and reading a number off a model are different jobs, and keeping them apart means you can look at the model itself, which is where you find out whether a straight line was a reasonable thing to ask for.
+
+[{broom}](https://broom.tidymodels.org/) turns a model into a data frame, which beats digging around in `coef()` by name.
+
+There are four things going on there, and they are the four I care about most.
+
+**Each does one job.** One fits, one reads. If you cannot say what a function does without using the word "and", you have two functions.
+
+**Everything it needs is an argument.** It doesn't reach out of itself for `front`, and it does not know that 107 came from a decision about longitude at that latitude. Pass things in and the function can be tested, moved, and read on its own.
+
+**It returns the thing.** The last expression is the answer. It doesn't print it, save it, or set a variable somewhere else and hope.
+
+**The magic number became an argument with a default.** What is `107` doing in the middle of a script? Nobody can question a number that never gets a name. `km_per_degree = 107` is a decision with a name, and you can change it without opening the body.
+
+```{r}
+#| label: use-front-speed
+occurrences <- read_occurrences("data/cane-toad-all.parquet") |>
+  clean_occurrences()
+
+occurrences |>
+  front_by_decade() |>
+  fit_front() |>
+  front_speed()
+```
+
+### Takehomes
+
+- Write the workflow as named calls before you write any bodies
+- Verbs make things, nouns are things
+- One job per function, and "and" in the description means two
+- Everything the function needs comes in as an argument
+- A magic number in a script becomes an argument with a default
+
+## What to avoid
+
+Now the other direction. Here is the same work done badly.
+
+```r
+analyse <- function() {
+  occ <- read_parquet("data/cane-toad-all.parquet")
+  if (nrow(occ) == 0) stop("no records")
+  if (!"eventDate" %in% names(occ)) stop("no eventDate column")
+  if (!"decimalLongitude" %in% names(occ)) stop("no longitude column")
+  occ$year <- as.integer(format(occ$eventDate, "%Y"))
+  occ <- occ[occ$year >= 1935 & !is.na(occ$decimalLongitude), ]
+  front <- ...
+  model <- lm(west_reached ~ decade, data = front)
+  ggsave("figs/front.png", plot_front(front))
+  message("speed: ", -coef(model)[["decade"]] * 107)
+}
+```
+
+That runs, and it gives the right answer. So why's it so much worse?
+
+**It has no arguments**, so it can only ever do this one thing to this one file. Want the galah? You'd have to write another one.
+
+**It does five jobs.** It reads, checks, cleans, models and plots, so you cannot test the cleaning without also writing a file to disk.
+
+**It returns nothing you can use.** The speed goes to the console as a message. You cannot put it in a table, compare it to another one, or check it.
+
+**And look at the guards.** Three lines of `stop()` before any work happens, so the shape of the function is hidden behind its own defensive crouch.
+
+::: {.callout-tip title="Read more: long errors smell" collapse="true"}
+
+That last one is a habit worth watching in your own code. Nick has written about it at [long errors smell](https://www.njtierney.com/posts/2023-12-01-long-errors-smell/).
+
+The fix is to pull the checks into their own named function, so the guard reads as one line and the work is visible again:
+
+```r
+front_speed <- function(front, km_per_degree = 107) {
+  check_has_rows(front)
+
+  model <- lm(west_reached ~ decade, data = front)
+  -coef(model)[["decade"]] * km_per_degree
+}
+```
+
+A blank line between the checking and the doing helps more than it should.
+
+:::
+
+### Takehomes
+
+- A function with no arguments can only do one thing, forever
+- If you cannot test one part without triggering another, it is too big
+- A result sent to the console with `message()` is a result you cannot use
+- Guards belong in their own `check_` function, not in front of the work
+
+## Getting the skeleton for free
+
+Writing the workflow first has one annoying consequence: you now have four function calls that don't exist, and four skeletons to type.
+
+[{fnmate}](https://github.com/MilesMcBain/fnmate) does that bit. Put your cursor on a call to a function you haven't written, press the shortcut, and it writes the definition into `R/` with the arguments already filled in from your call.
+
+So `front_speed(toad_front)` becomes:
+
+```r
+front_speed <- function(toad_front) {
+
+}
+```
+
+It's a small thing, but it removes the last excuse for not writing the workflow out first, which is that the typing is dull.
+
+## Where the functions live
+
+They all live in one folder, `R/`, with one concern per file.
+
+```
+your-project/
+├── R/
+│   ├── clean_occurrences.R
+│   ├── fit_front.R
+│   ├── front_by_decade.R
+│   ├── front_speed.R
+│   ├── plot_front.R
+│   └── read_occurrences.R
+├── data/
+│   ├── cane-toad-to-1999.parquet
+│   └── cane-toad-all.parquet
+└── analysis.R
+```
+
+`analysis.R` is now short enough to read in one go, and it says what the analysis does. So what happens when you want to know *how* a step works? The filename tells you which file to open.
+
+That is the whole trick, and it buys you more than it looks like it should.
+
+::: {.callout-note title="Your Turn"}
+
+Pull `front_speed()` out of your own `analysis.R` and into `R/front_speed.R`.
+
+1. Run the script again. Does it still work?
+2. Read what is left of `analysis.R`. Can you see the shape of the analysis now?
+
+:::
+
+## Summary {.unnumbered}
+
+1. **Write the workflow as named calls first**, before any bodies exist.
+2. **Verbs make nouns.** `front_by_decade()` makes `toad_front`.
+3. **One job per function**, and "and" in the description means you have two. Fitting a model and reading a number off it are two.
+4. **Everything comes in as an argument**, including the numbers you would otherwise hardcode.
+5. **Return the thing.** A `message()` is not a return value.
+6. **`R/` holds the functions**, one concern per file, and `analysis.R` holds the shape.
+
+Your script is now a list of named steps with the details somewhere else. Next session we break one on purpose, and find out how to look inside it.

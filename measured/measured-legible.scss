@@ -1,0 +1,27 @@
+/*-- scss:defaults --*/
+// TYPOGRAPHY - Atkinson Hyperlegible Next and Fira Code. The default.
+//
+// Atkinson Hyperlegible was drawn by the Braille Institute for readers
+// with low vision. Its letterforms are deliberately hard to confuse
+// with one another, which is the same property you want in a code
+// font, for the same reason.
+//
+// Measured x-heights (fraction of the em), which is what decides
+// whether prose and code look like they belong together:
+//   Atkinson Hyperlegible Next 0.447   Fira Code 0.526
+$font-family-sans-serif: "Atkinson Hyperlegible Next", system-ui, sans-serif !default;
+$font-family-base:       "Atkinson Hyperlegible Next", system-ui, sans-serif !default;
+$font-family-monospace:  "Fira Code", ui-monospace, monospace !default;
+$headings-font-family:   "Atkinson Hyperlegible Next", system-ui, sans-serif !default;
+$font-size-root:         18px !default;
+$line-height-base:       1.6 !default;
+$body-color:             #22272e !default;   // 15.02:1 on white, AAA
+$code-color:             #C25502 !default;
+
+/*-- scss:rules --*/
+// Loaded from the Google Fonts CDN. Self-host these if you need the
+// build to work offline, or would rather not send readers' IPs to
+// Google.
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=Fira+Code:wght@400;700&display=swap');
+
+h1, h2, h3, h4 { font-weight: 700; }

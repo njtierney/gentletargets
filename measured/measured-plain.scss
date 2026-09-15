@@ -1,0 +1,12 @@
+/*-- scss:defaults --*/
+// TYPOGRAPHY - the fallback. Leaves the base theme's own faces alone
+// and only raises the root size, so you keep the callouts and the code
+// blocks without depending on a webfont.
+//
+// Use this if a font fails to load, a licence question comes up, or you
+// want the theme to work offline.
+//
+// Note most Bootswatch themes already set 17px, so this is a one-step
+// change rather than two from Bootstrap's 16px default.
+$font-size-root: 18px !default;
+$body-color:     #22272e !default;   // 15.02:1 on white, AAA

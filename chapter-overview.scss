@@ -1,0 +1,65 @@
+/*-- scss:rules --*/
+// ── The overview box ─────────────────────────────────────────
+// Every chapter opens with duration and questions. Boxing it separates
+// the chapter's contract from the chapter's prose, so a reader can see
+// at a glance what they are in for.
+//
+// This is NOT a Quarto callout, and deliberately so. The house layer
+// gives all five callout types a fixed job and a Dark2 colour, and a
+// reader is being asked to navigate by that colour. Spending a sixth
+// colour on furniture that appears once per chapter would weaken the
+// five that carry meaning.
+//
+// So it takes the same shape as a callout - 8px radius, a header band,
+// the same 0.9rem padding - and none of the colour. The border and tint
+// are derived from the theme the same way the code blocks are, so this
+// follows a light or a dark base without being told which.
+main .overview {
+  border: 1px solid var(--code-edge);
+  border-radius: 8px;
+  overflow: hidden;
+
+  // Padding lives on the box rather than on the section pandoc wraps
+  // the heading in, so the rules below work whether or not
+  // `--section-divs` is in play. The header band then cancels it with
+  // an equal negative margin to reach the box edges.
+  padding: 0 0.9rem 0.9rem;
+  margin: 1.6rem 0 2.4rem;
+}
+
+// The `## Overview` heading IS the header band. It stays a real heading
+// so it survives into the PDF and into the table of contents, where it
+// is the reader's way back to the question list.
+main .overview h2 {
+  margin: 0 -0.9rem 0.9rem;
+  padding: 0.5rem 0.9rem;
+
+  background: var(--code-bg);
+  border-bottom: 1px solid var(--code-edge);
+
+  // The house layer sets 2.4rem above every h2 so a heading binds to
+  // what it introduces. In here that would push the band off the top of
+  // its own box.
+  margin-top: 0;
+
+  font-size: 1.05rem;
+  font-weight: 700;
+  border-left: none;
+}
+
+// The section wrapper must not add a second layer of padding.
+main .overview section {
+  padding: 0;
+  margin: 0;
+}
+
+main .overview > :last-child,
+main .overview section > :last-child {
+  margin-bottom: 0;
+}
+
+// Questions are the substance of the box, so they get room to breathe
+// rather than sitting tight against the duration line.
+main .overview ul {
+  margin-bottom: 0;
+}

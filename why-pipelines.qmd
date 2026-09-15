@@ -1,0 +1,291 @@
+# Why pipelines? {#sec-why-pipelines}
+
+In 1935, about 2,400 [cane toads](https://en.wikipedia.org/wiki/Cane_toad) were released into cane fields near Gordonvale, in far north Queensland. They are now most of the way across the top of Australia. This chapter works out how fast they are moving, and uses that to show why you might want a pipeline.
+
+::: {.overview}
+
+## Overview {.unnumbered}
+
+**Duration** 90 minutes
+
+**Questions**
+
+<!-- These map onto the sections below, in order. If you move a section, move its question. -->
+
+- Why would I want a pipeline at all?
+- Where were the cane toads, and where are they now?
+- How do I know if my answer is wrong?
+- What happens when more data arrives?
+- Which parts of my analysis depend on which other parts?
+
+**What you need this session**
+
+- A session of RStudio open
+- The `toad-analysis` project. See [Setup](setup.qmd).
+
+:::
+
+```{r}
+#| label: setup
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(arrow)
+library(readr)
+library(leaflet)
+library(fs)
+lapply(dir_ls("R", glob = "*.R"), source)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", message = FALSE)
+
+speed_from <- function(records) {
+  front_speed(fit_front(front_by_decade(records)))
+}
+```
+
+::: {.callout-note title="IMAGE PLACEHOLDER"}
+
+Photograph of a cane toad. Something large and unbothered, ideally on a road at night.
+
+:::
+
+## Why pipelines?
+
+Data analysis is iterative. Cleaning, exploring and modelling rarely run start to finish without a hitch, and each step often sends you back to an earlier one. You find a problem in a plot, and the fix belongs in the cleaning.
+
+So you re-run it, usually from the top, because working out which parts actually needed re-running is harder than just doing all of it.
+
+That works until the analysis gets big enough that re-running it costs real time. Then you start saving intermediate results by hand, and now you have a second problem: when you change a cleaning step, which of those saved results are still true?
+
+Pipeline tools solve this. They watch which code and which files changed, and run only the parts that depend on them. [targets](https://books.ropensci.org/targets/) is one of them, and it is what this course is about.
+
+The rest of this chapter is the problem, not the tool. We will write a small analysis, get the answer wrong twice, and finish with a question you can't answer by reading your own code.
+
+::: {.callout-note title="IMAGE PLACEHOLDER"}
+
+Animated map of the toad invasion, 1935 to 2025, one frame per decade. Needs `gganimate` and `gifski`, neither currently installed.
+
+:::
+
+## The question
+
+Toads were released at one place, on one date, and they spread west. So there is a number that describes them: how many kilometres a year does the western edge move?
+
+Your boss has sent you `cane-toad-to-1999.parquet`. There's more, and it'll turn up later.
+
+## A first answer
+
+```{r}
+#| label: first-answer
+occ <- read_occurrences("data/cane-toad-to-1999.parquet")
+
+front <- front_by_decade(occ)
+
+km_per_year <- front_speed(fit_front(front))
+km_per_year
+```
+
+`front_by_decade()` finds the westernmost record reached by the end of each decade. The model is a straight line through those points, and its slope is the speed. A degree of longitude is about 107 km up there, which is where that number comes from.
+
+```{r}
+#| label: fig-first-front
+#| fig-cap: "The front as the first answer sees it. Orange is the fitted line."
+plot_front(front)
+```
+
+So `r round(km_per_year, 1)` kilometres a year, from `r format(nrow(occ), big.mark = ",")` records.
+
+::: {.callout-note title="Your Turn"}
+
+1. Run the analysis and check you get the same number.
+2. Look at the plot. Does anything about that line bother you?
+
+:::
+
+### Takehomes
+
+- One row is one report of one species, at one place, at one time
+- `front_by_decade()` gives the westernmost record reached by each decade
+- The slope of a line through those points is a speed
+- Nothing errored
+
+## Ninety-six kilometres a year
+
+Toads don't move at 96 kilometres a year.
+
+It's hard to be sure of that from the number alone, so put the records on a map instead.
+
+```{r}
+#| label: fig-world
+#| fig-cap: "Every record in the file. The map fits to the data."
+map_occurrences(occ)
+```
+
+Two of those records are not in Australia. One is in the middle of the Pacific and one is in South America.
+
+```{r}
+#| label: count-outside
+occ |>
+  filter(!between(decimalLongitude, 112, 154) | !between(decimalLatitude, -44, -9)) |>
+  nrow()
+```
+
+Fifty-one records sit outside Australia, and they are a sign or a decimal place lost somewhere upstream. The analysis takes the *westernmost* record, so a single toad at longitude -170 puts the front two thirds of the way around the world.
+
+Drop anything outside Australia and run it again.
+
+```{r}
+#| label: coords-fixed
+in_australia <- occ |>
+  filter(between(decimalLongitude, 112, 154), between(decimalLatitude, -44, -9))
+
+speed_from(in_australia)
+```
+
+`r round(speed_from(in_australia), 1)` kilometres a year.
+
+::: {.callout-note title="Your Turn"}
+
+1. Add the coordinate filter and re-run.
+2. You now have two different answers from the same file. Which one is saved in `output/`?
+3. How would you find out?
+
+:::
+
+### Takehomes
+
+- Fifty-one records out of `r format(nrow(occ), big.mark = ",")` moved the answer by a factor of twenty
+- A map found them and the number did not
+- Both answers were written to the same file, and the second overwrote the first
+
+## Four point seven kilometres a year
+
+Toads don't move that slowly either.
+
+Look at the dates this time, and count anything earlier than 1935.
+
+```{r}
+#| label: count-dates
+occ |>
+  filter(year < 1935) |>
+  count(year)
+```
+
+Forty-one records are dated 1770, and three are dated 1900. The toads arrived in 1935. These records can't be right, and they anchor the start of the line to a point where the species was not in the country.
+
+They are `r round(100 * sum(occ$year < 1935, na.rm = TRUE) / nrow(occ), 1)`% of the file.
+
+```{r}
+#| label: fully-cleaned
+clean <- clean_occurrences(occ)
+speed_from(clean)
+```
+
+`r round(speed_from(clean), 1)` kilometres a year. That agrees with what you get from all ninety years of data, so the small file gives the right answer once it's clean.
+
+```{r}
+#| label: fig-clean-front
+#| fig-cap: "The same front, after cleaning. The 1770 records were holding the left end down."
+plot_front(front_by_decade(clean))
+```
+
+::: {.callout-note title="Your Turn"}
+
+In pairs, and without running anything:
+
+1. You changed the cleaning twice. How many of your saved outputs are correct?
+2. If a colleague opened `output/toad-front.csv` now, which of the three answers would they see?
+
+:::
+
+### Takehomes
+
+- Two bugs, pulling opposite ways. Neither raised an error or a warning
+- `r round(100 * sum(occ$year < 1935, na.rm = TRUE) / nrow(occ), 1)`% of the rows moved the answer by a factor of seven
+- All three answers looked equally plausible on disk
+
+## The invasion, by decade
+
+Now that the data is clean, the westward spread we set out to measure is visible.
+
+```{r}
+#| label: fig-decades
+#| fig-cap: "The front moving west, one panel per decade."
+#| fig-height: 5
+plot_decades(clean)
+```
+
+## More data arrives
+
+Your boss sends `cane-toad-from-2000.parquet`. Change the filename and run it again.
+
+```{r}
+#| label: later-data
+later <- read_occurrences("data/cane-toad-from-2000.parquet")
+nrow(later)
+```
+
+Then run it again on `cane-toad-all.parquet`, which is everything there is.
+
+::: {.callout-note title="Your Turn"}
+
+Run the analysis on each of the three files.
+
+1. What happens to the speed?
+2. What happened to `output/toad-front.csv` each time?
+
+:::
+
+Each of those runs redid the cleaning, the front, the model and both plots. That's fine, because the whole thing takes about a second.
+
+But you changed one filename and re-ran everything underneath it, because you had no way of knowing which parts of the analysis that filename touched.
+
+## The question we cannot answer
+
+**Which steps depended on the line you changed?**
+
+It's a nine line script and you've run it five times.
+
+::: {.callout-note title="Your Turn"}
+
+In pairs, take the change from `cane-toad-to-1999.parquet` to `cane-toad-all.parquet`, and write down which steps have to run again and which do not.
+
+Then compare with your neighbour. Did you agree?
+
+:::
+
+You can work it out, but you had to hold all of it in your head, and I suspect you disagreed with your neighbour somewhere. Now imagine three hundred lines, written four months ago, behind a paper you are revising.
+
+## What targets does about it
+
+[targets](https://books.ropensci.org/targets/) works out what depends on what, so you don't have to.
+
+Three ideas carry the rest of this course, and you have already used all three.
+
+**Functions.** `read_occurrences()`, `front_by_decade()` and `plot_front()` each do one named job. There's loose code around them doing other jobs.
+
+**Cached results.** `front` took work to build. You built it five times from data that had not changed.
+
+**The dependency graph.** The thing you just tried to assemble in your head. It's a real object, and targets will draw it for you.
+
+::: {.callout-tip title="Where we are going"}
+
+By the end of this course you will change one line in a cleaning function, run `tar_make()`, and watch the things that depend on it rebuild while everything else stays put.
+
+:::
+
+## Summary {.unnumbered}
+
+1. **The question is how fast the front moves west.** Everything else serves that.
+2. **You got three answers from one file**, and all three looked reasonable.
+3. **Fifty-one records outside Australia** made the toads twenty times faster. A map found them.
+4. **Forty-four impossible dates** made them seven times slower.
+5. **Nothing errored.** Wrong answers arrive quietly and overwrite right ones.
+6. **Functions, cached results, and the dependency graph** are the three things this course is about.
+
+Next session we take this script apart and rebuild it as functions.
+
+::: {.callout-note title="Where this comes from"}
+
+The function-writing and debugging sessions draw on [Introduction to Functions and Debugging](https://fun2debug.njtierney.com), which covers both in more depth.
+
+:::

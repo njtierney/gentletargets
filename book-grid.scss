@@ -1,0 +1,27 @@
+/*-- scss:defaults --*/
+// Book layout geometry.
+//
+// A book column is narrower than a website's, and an 80 character code
+// line did not fit the default - it overflowed by 53px and scrolled.
+//
+// The fix is not `$grid-body-width`: at a normal window the layout is
+// space-constrained, not cap-constrained, so raising the cap does
+// nothing. What actually costs the content column is the grid gutter,
+// which is subtracted TWICE - `minmax(500px, calc(900px - 6em))` - so
+// it is worth double what it looks like.
+//
+// Measured at 1400px, 18px root:
+//
+//   gutter 3em    sidebar 250  ->  prose 669, code overflows 53px
+//   gutter 2em    sidebar 250  ->  prose 741, fits, TOC clearance -4
+//   gutter 2.25em sidebar 220  ->  prose 753, fits, TOC clearance +5  ✓
+$grid-body-width:          900px  !default;
+$grid-column-gutter-width: 2.25em !default;
+$grid-sidebar-width:       220px  !default;
+
+/*-- scss:rules --*/
+// The parked copy button's overhang - its own width plus this gap -
+// has to stay inside the grid gutter, or it lands on top of the table
+// of contents. Shrinking the gutter above means shrinking this too.
+main .code-copy-outer-scaffold,
+main div.sourceCode { --copy-gap: 6px; }

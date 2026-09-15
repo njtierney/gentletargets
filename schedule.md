@@ -1,28 +1,39 @@
 # Schedule
 
-## Why Pipelines?
+Eight chapters, ninety minutes each. The course is exercise heavy, so most of that time is yours rather than mine.
+
+## 1. Why pipelines?
+
+*90 minutes*
 
 - Where do I start? What do I run first?
-- Common problems with pipelines/workflows
-- Intro to {targets}
-- Concepts in {targets}: functions, targets, graphs/networks
+- Common problems with pipelines and workflows
+- Working with occurrence records: reading, cleaning, mapping with {leaflet}
+- Finding out that your answer was wrong, twice
+- Concepts in {targets}: functions, results worth keeping, graphs and networks
 - Where we are going
 
-## Starting with function: writing out a workflow
+## 2. Starting with functions: writing out a workflow
 
-- Defining out functions as the unit of understanding
+*90 minutes*
+
+- Writing out a workflow with functions, before any of them exist
+- Defining functions as the unit of understanding
 - Ideal properties of functions
 - Properties to avoid in functions
-- Writing out a workflow with functions
 - Using {fnmate} to accelerate function creation
 
-## Debugging functions
+## 3. Debugging functions
 
-- brower()
-- debug() and debugonce()
-- options(recover)
+*90 minutes*
 
-## Getting started with {targets}
+- `browser()`
+- `debug()` and `debugonce()`
+- `options(recover)`
+
+## 4. Getting started with {targets}
+
+*90 minutes*
 
 - Using {tflow} to set up a targets project
   - Unpacking folder structure, `_targets.R` file
@@ -31,35 +42,57 @@
 - Your first pipeline
 - Modifying and rebuilding: understanding what changes
 
-## Deeper workflow with {targets}
+## 5. Deeper workflow with {targets}
+
+*90 minutes*
 
 - Data read in with `tar_read()`
+- Seeing the dependency graph with `tar_visnetwork()`
+- Predicting what will rebuild, then checking with `tar_outdated()`
 - Rendering reports with `tar_quarto()`
 - Using keyboard shortcuts to load, inspect
 - Using `tar_workspaces()` to debug issues
 - Common problems when writing pipelines
 
-## Advanced Targets Features
+## 6. Branching and {crew}
 
-- Using {crew} to paralellise workflow
-- Branching 
-- Using targets with HPC
+*90 minutes*
 
-## Introduction to Geospatial Data
+- Branching over many of something
+- Using {crew} to parallelise a workflow
+
+## 7. Geospatial pipelines with {geotargets}
+
+*90 minutes*
 
 - Spatial data challenges
 - Introduction to {terra} and {sf}
-
-## Geospatial Pipelines with {geotargets}
-
 - Why {geotargets}?
-- `tar_terra_rast()`, `tar_terra_vect()`, etc
+- `tar_terra_rast()`, `tar_terra_vect()`, and friends
 - Building a geospatial pipeline
 
-## Production Workflows and Best Practices
+## 8. Production workflows and best practices
+
+*90 minutes*
 
 - Organising large projects
 - Convert your own work into a pipeline
 - Feedback on your pipeline
 - Resources and next steps
 - Open Q&A
+
+## Appendix A: Running targets on an HPC
+
+Not taught, because there is no cluster in the room.
+
+- `crew.cluster::crew_controller_slurm()`
+- Controller groups: heavy targets to the cluster, light ones stay local
+- Why workers do not source `_targets.R`, and what that breaks
+
+## Appendix B: Cloud storage and cloud workers
+
+Also not taught, for the same reason.
+
+- Keeping the targets store in S3 with `repository = "aws"` and `tar_resources_aws()`
+- Which file targets you still want kept local, and why
+- `crew.aws.batch` for workers rather than storage

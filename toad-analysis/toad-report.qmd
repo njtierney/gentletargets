@@ -1,0 +1,45 @@
+---
+title: "Where are the cane toads going?"
+format: html
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(fs)
+lapply(dir_ls("R", glob = "*.R"), source)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+
+front <- read_csv("output/toad-front.csv")
+summary_stats <- read_csv("output/toad-summary.csv")
+```
+
+Cane toads were released near Gordonvale in 1935. This is where they had got to
+in `r basename(summary_stats$source)`, using `r format(summary_stats$records_clean, big.mark = ",")`
+records from the Atlas of Living Australia.
+
+## How fast is the front moving?
+
+**`r round(summary_stats$km_per_year, 1)` kilometres a year.**
+
+```{r}
+#| label: fig-front
+#| fig-cap: "The westernmost record reached by the end of each decade."
+plot_front(front)
+```
+
+## How much data is there?
+
+```{r}
+#| label: fig-records
+#| fig-cap: "Records per decade. Most of them are recent."
+plot_decade(front)
+```
+
+Of `r format(summary_stats$records, big.mark = ",")` records supplied,
+`r format(summary_stats$records - summary_stats$records_clean, big.mark = ",")`
+were dropped as impossible: coordinates outside Australia, or dates before the
+toads arrived.
