@@ -20,14 +20,14 @@ book:
   repo-branch: main
   repo-actions: [edit, issue]
   date: "2026-02-17"
-  page-footer: "Copyright 2026, Nicholas Tierney" 
+  page-footer: "Copyright 2026, Nicholas Tierney"
   page-navigation: true
   search: true
   chapters:
     - "index.qmd"
     - "setup.qmd"
     - "why-pipelines.qmd"
-    - "starting-with-functions.qmd"
+    # - "starting-with-functions.qmd"
 
 # Only `##` and above get a number.
 number-depth: 2
