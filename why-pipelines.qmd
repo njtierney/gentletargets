@@ -88,7 +88,7 @@ Somebody has emailed you some files: A script, and some data.
 
 Below you can view the entire analysis that I will live code:
 
-::: {.callout-note title = "The live code", collapse="true"}
+::: {.callout-note title="The live code" collapse="true"}
 
 Here's the script, a piece at a time. The code below is read straight out of `ch1/01-flat-script.R`, so what you see here is what's in the file.
 
