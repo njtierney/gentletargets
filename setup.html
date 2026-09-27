@@ -154,7 +154,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to targets and geotargets</span></span></a>
+ <span class="menu-text">Welcome</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -166,7 +166,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./why-pipelines.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Why pipelines?</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why pipelines?</span></span></a>
   </div>
 </li>
     </ul>
@@ -193,6 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#the-r-packages" id="toc-the-r-packages" class="nav-link" data-scroll-target="#the-r-packages">The R packages</a></li>
   <li><a href="#installing-tflow-and-fnmate" id="toc-installing-tflow-and-fnmate" class="nav-link" data-scroll-target="#installing-tflow-and-fnmate">Installing {tflow} and {fnmate}</a></li>
   <li><a href="#checking-it-all-worked" id="toc-checking-it-all-worked" class="nav-link" data-scroll-target="#checking-it-all-worked">Checking it all worked</a></li>
+  <li><a href="#if-something-will-not-install" id="toc-if-something-will-not-install" class="nav-link" data-scroll-target="#if-something-will-not-install">If something will not install</a></li>
   </ul></li>
   <li><a href="#the-course-data-and-the-analysis" id="toc-the-course-data-and-the-analysis" class="nav-link" data-scroll-target="#the-course-data-and-the-analysis">The course data and the analysis</a></li>
   <li><a href="#what-to-bring" id="toc-what-to-bring" class="nav-link" data-scroll-target="#what-to-bring">What to bring</a></li>
@@ -232,26 +233,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="how-this-book-works">How this book works</h2>
 <section id="the-book-is-longer-than-the-course" class="level3">
 <h3 class="anchored" data-anchor-id="the-book-is-longer-than-the-course">The book is longer than the course</h3>
-<p>The course is twelve hours of teaching. There is more in the book than we can get through, which is deliberate.</p>
-<p>I’ll change what we cover on the day depending on how we are going, and the rest stays here for you to come back to.</p>
+<p>The course is twelve hours of teaching material. There is more in the book than we can get through, and that’s deliberate. I’ll change what we cover on the day, depending on how we are going.</p>
+<p>During the course we will work through things live, and the content stays here for you to come back to.</p>
 </section>
 <section id="how-we-will-work" class="level3">
 <h3 class="anchored" data-anchor-id="how-we-will-work">How we will work</h3>
-<p>Mostly by typing.</p>
-<p>I write code, you write it too, and we break things together.</p>
-<p>A lot of this course is about what happens when you change your mind halfway through an analysis.</p>
-<p>That means we’ll spend real time with things in a broken or half finished state, on purpose. If that feels uncomfortable, good, because it’s the state most analyses actually live in.</p>
-<p>You don’t need to keep up with everything I type. Every code block has a copy button, and anything extra I write on the day goes up on GitHub.</p>
+<p>Mostly by typing. I will write code, you write it too, and we will break things together, then fix them.</p>
+<p>A lot of this course is about what happens when you change your mind halfway through an analysis, or when new data turns up. That means we’ll spend real time with things half finished, on purpose. It’s the state most analyses actually live in.</p>
+<p>You’ll be doing a lot of the “driving” during exercises, which is one of the best ways to learn.</p>
+<p>You don’t need to keep up with everything I type. There is a copy button on every code block, and anything extra I write in class I will share on GitHub.</p>
 </section>
 <section id="the-boxes" class="level3">
 <h3 class="anchored" data-anchor-id="the-boxes">The boxes</h3>
-<p>Five kinds of box turn up, each with its own colour and icon:</p>
+<p>Five kinds of box turn up throughout, each with its own colour and icon:</p>
 <ul>
-<li><strong>✏️ Your Turn</strong> - something for you to do. Most we do together. The ones that ask what you think have no wrong answers.</li>
-<li><strong>🕰️ Some history</strong> - where an idea came from.</li>
-<li><strong>🔎 Going deeper</strong> - optional detail, a longer example, or a pointer to the paper. Boxes titled <strong>Read more</strong> point at the post or talk a section is adapted from.</li>
+<li><strong>✏️ Your Turn</strong> - something for you to do. Most of these we do together in the session, and a few are there for afterwards. The ones that ask what you think have no wrong answers.</li>
+<li><strong>🕰️ Some history</strong> - where things came from.</li>
+<li><strong>🔎 Going deeper</strong> - optional extra detail, a longer example, or a list you might want later. Boxes titled <strong>Read more</strong> point at the blog post or talk a section is adapted from.</li>
 <li><strong>⚠️ Watch out</strong> - a place people commonly trip.</li>
-<li><strong>🚨</strong> - the things that will bite you.</li>
+<li><strong>🚨</strong> - the things that will likely create issues.</li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled" title="Your Turn">
 <div class="callout-header d-flex align-content-center">
@@ -263,12 +263,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Exercises look like this. Most give you something to run:</p>
+<p>Exercises look like this. Most of them give you something to run:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-label="1"></a>R.version.string</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Some just ask you something. Here is the one I care about:</p>
+<p>Some of them just ask you something.</p>
+<p>Here is the one I actually care about:</p>
 <ol type="1">
-<li>Think of the last analysis you had to re-run from scratch. What made you do it?</li>
+<li>Think of the last analysis you re-ran from scratch because you weren’t sure which parts were still current. What made you do it?</li>
 </ol>
+<p>There are no wrong answers.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled" title="Some history: the tab">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Some history: the tab
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>targets describes itself as “Make-like”, and <a href="https://en.wikipedia.org/wiki/Make_(software)">Make</a> is where the idea started. Stuart Feldman wrote it in 1976, to stop people rebuilding things that hadn’t changed.</p>
+<p>Make has one famous wart. The lines that do the work must start with a tab, not spaces. Feldman has said that was a mistake, caused by the parser he used in the first version, and kept ever since so that old files keep working.</p>
+<p>Indent with spaces by accident and you get:</p>
+<pre><code>Makefile:2: *** missing separator.  Stop.</code></pre>
+<p>A <code>_targets.R</code> file is R, so none of that applies.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Going deeper: how these boxes are made">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Going deeper: how these boxes are made
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>You just clicked this - that is the collapsing demonstrated.</p>
+<p>These are Quarto callouts, and there is nothing clever going on. Each one is a fenced div with a class on it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-label="1"></a>::: {.callout-note title="Your Turn"}</span>
+<span id="cb3-2"><a href="#cb3-2" aria-label="2"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-label="3"></a>Something for you to do.</span>
+<span id="cb3-4"><a href="#cb3-4" aria-label="4"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-label="5"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The colours and the icons come from a stylesheet in the book’s repo, not from Quarto. If you want them in your own work, the docs are at <a href="https://quarto.org/docs/authoring/callouts.html">Quarto: callout blocks</a>.</p>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled" title="Restart R after a big install">
@@ -281,74 +323,88 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If you install a package that is already loaded, R can end up half on the old version and half on the new one. You then get errors that make no sense and do not survive a restart.</p>
+<p>If you install a package that is already loaded in your session, R can end up half on the old version and half on the new one. You then get errors that make no sense and do not survive a restart, which is a miserable way to spend twenty minutes.</p>
 <p>So once you have worked through the installs below, restart R.</p>
+<p>In RStudio that is</p>
 <ul>
 <li><code>Ctrl + Shift + F10</code> on Windows</li>
 <li><code>Cmd + Shift + 0</code> on Mac</li>
 </ul>
 </div>
 </div>
+<p>Some boxes are collapsed, showing only their title, like the <strong>Going deeper</strong> one above. Click the title to open one.</p>
 </section>
 <section id="the-code" class="level3">
 <h3 class="anchored" data-anchor-id="the-code">The code</h3>
-<p>Lines starting with <code>#&gt;</code> are <strong>output</strong>, not code. You don’t type those.</p>
-<p>We use the base pipe, <code>|&gt;</code>, throughout, rather than <code>%&gt;%</code>. If you’re used to <code>%&gt;%</code>, everything here works the same way.</p>
+<p>Code blocks look like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-label="1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-label="2"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-label="3"></a>airquality <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-label="4"></a>  <span class="fu">count</span>(Month)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-label="5"></a><span class="co">#&gt;   Month  n</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-label="6"></a><span class="co">#&gt; 1     5 31</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-label="7"></a><span class="co">#&gt; 2     6 30</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-label="8"></a><span class="co">#&gt; 3     7 31</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-label="9"></a><span class="co">#&gt; 4     8 31</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-label="10"></a><span class="co">#&gt; 5     9 30</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Lines starting with <code>#&gt;</code> are <strong>output</strong>, not code. You do not type those. They are what R prints back, shown so you can check you got the same thing.</p>
+<p>Longer blocks have line numbers in the margin so that I can say “look at line 4” and we are both looking at the same line. Short blocks do not, because there is nothing to point at.</p>
+<p>We use the base pipe, <code>|&gt;</code>, rather than <code>%&gt;%</code> throughout. If you are used to <code>%&gt;%</code>, everything here works the same way.</p>
 </section>
 <section id="where-everything-lives" class="level3">
 <h3 class="anchored" data-anchor-id="where-everything-lives">Where everything lives</h3>
 <ul>
 <li><strong>This book</strong> - <a href="https://gentle-targets.njtierney.com" class="uri">https://gentle-targets.njtierney.com</a></li>
-<li><strong>The source</strong> - <a href="https://github.com/njtierney/gentletargets" class="uri">https://github.com/njtierney/gentletargets</a>. Every page has an “Edit this page” link that goes straight to the file that made it.</li>
+<li><strong>The book’s source</strong> - <a href="https://github.com/njtierney/gentletargets" class="uri">https://github.com/njtierney/gentletargets</a>. Every page has an “Edit this page” link, which goes straight to the file that made it.</li>
+<li><strong>The analysis I work from</strong> - <a href="https://github.com/njtierney/toad-analysis" class="uri">https://github.com/njtierney/toad-analysis</a>. It changes a lot while the course runs; more on that below.</li>
 </ul>
-<p><strong>If you find a mistake, please tell me.</strong> Every page has a link to open an issue. I really appreciate knowing.</p>
+<p><strong>If you find a mistake, please tell me.</strong> Every page has a link to open an issue, or you can email me. I really appreciate knowing if there is an error!</p>
 </section>
 </section>
 <section id="what-to-install" class="level2">
 <h2 class="anchored" data-anchor-id="what-to-install">What to install</h2>
+<p>If you can, it is worthwhile to install the below before the first session.</p>
 <section id="r" class="level3">
 <h3 class="anchored" data-anchor-id="r">R</h3>
-<p>You need <strong>R 4.5.0 or later</strong>, from <a href="https://cran.r-project.org/" class="uri">https://cran.r-project.org/</a>. Check with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-label="1"></a>R.version.string</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You also need an editor. I recommend <a href="https://posit.co/download/rstudio-desktop/">RStudio</a>, and <a href="https://positron.posit.co/">Positron</a> works too.</p>
+<p>You need <strong>R 4.5.0 or later</strong>, from <a href="https://cran.r-project.org/" class="uri">https://cran.r-project.org/</a>. Check what you have with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-label="1"></a>R.version.string</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>R 4.5.0 came out in April 2025, so this shouldn’t be a stretch. If you are on something older, the base pipe <code>|&gt;</code> and the short anonymous function <code>\(x)</code> both need at least 4.2.0, and they turn up throughout the book.</p>
+<p>You also need an editor. I recommend <a href="https://posit.co/download/rstudio-desktop/">RStudio</a>. <a href="https://positron.posit.co/">Positron</a> works too, and I am happy to talk through the differences.</p>
 </section>
 <section id="the-r-packages" class="level3">
 <h3 class="anchored" data-anchor-id="the-r-packages">The R packages</h3>
-<p>This will take a few minutes.</p>
-<p>They are grouped by what they are for, rather than alphabetically, so you can see what you are installing.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-label="1"></a><span class="co"># the analysis itself</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-label="2"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-label="3"></a>  <span class="st">"arrow"</span>,      <span class="co"># reads the parquet data files</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-label="4"></a>  <span class="st">"broom"</span>,      <span class="co"># turns a model into a data frame</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-label="5"></a>  <span class="st">"conflicted"</span>, <span class="co"># makes function masking an error rather than a surprise</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-label="6"></a>  <span class="st">"here"</span>,       <span class="co"># file paths that work from anywhere in a project</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-label="7"></a>  <span class="st">"janitor"</span>,    <span class="co"># clean_names(), and other tidying</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-label="8"></a>  <span class="st">"tidyverse"</span>   <span class="co"># dplyr, ggplot2, readr, lubridate and friends</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-label="9"></a>))</span>
-<span id="cb3-10"><a href="#cb3-10" aria-label="10"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-label="11"></a><span class="co"># making pictures</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-label="12"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
-<span id="cb3-13"><a href="#cb3-13" aria-label="13"></a>  <span class="st">"gganimate"</span>,  <span class="co"># the march of the cane toads</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-label="14"></a>  <span class="st">"gifski"</span>,     <span class="co"># renders the animation to a gif</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-label="15"></a>  <span class="st">"leaflet"</span>,    <span class="co"># interactive maps</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-label="16"></a>  <span class="st">"ozmaps"</span>,     <span class="co"># Australian state boundaries to draw the toads on</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-label="17"></a>  <span class="st">"visdat"</span>      <span class="co"># vis_dat(), for seeing what is missing</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-label="18"></a>))</span>
-<span id="cb3-19"><a href="#cb3-19" aria-label="19"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-label="20"></a><span class="co"># pipelines</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-label="21"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
-<span id="cb3-22"><a href="#cb3-22" aria-label="22"></a>  <span class="st">"crew"</span>,       <span class="co"># parallel workers</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-label="23"></a>  <span class="st">"fs"</span>,         <span class="co"># file and directory handling</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-label="24"></a>  <span class="st">"quarto"</span>,     <span class="co"># rendering reports from the pipeline</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-label="25"></a>  <span class="st">"tarchetypes"</span>,</span>
-<span id="cb3-26"><a href="#cb3-26" aria-label="26"></a>  <span class="st">"targets"</span>,</span>
-<span id="cb3-27"><a href="#cb3-27" aria-label="27"></a>  <span class="st">"visNetwork"</span>  <span class="co"># what tar_visnetwork() draws the graph with</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-label="28"></a>))</span>
-<span id="cb3-29"><a href="#cb3-29" aria-label="29"></a></span>
-<span id="cb3-30"><a href="#cb3-30" aria-label="30"></a><span class="co"># spatial, for the last three hours</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-label="31"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"geotargets"</span>, <span class="st">"sf"</span>, <span class="st">"terra"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>{visNetwork}</code> is what draws the dependency graph when you run <code>tar_visnetwork()</code>, which we use constantly, and it is not a dependency of targets.</p>
-<p><code>{sf}</code> and <code>{terra}</code> are only needed at the end, but they are the slowest to install, so it is worth doing now rather than on the day.</p>
+<p>This will take a few minutes. They are grouped by what they are for, so you can see what you are installing:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-label="1"></a><span class="co"># the analysis itself</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-label="2"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-label="3"></a>  <span class="st">"arrow"</span>,      <span class="co"># reads the parquet data files</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-label="4"></a>  <span class="st">"conflicted"</span>, <span class="co"># makes function masking an error rather than a surprise</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-label="5"></a>  <span class="st">"geodist"</span>,    <span class="co"># distances across the surface of the earth</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-label="6"></a>  <span class="st">"here"</span>,       <span class="co"># file paths that work from anywhere in a project</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-label="7"></a>  <span class="st">"janitor"</span>,    <span class="co"># clean_names(), and other tidying</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-label="8"></a>  <span class="st">"tidyverse"</span>   <span class="co"># dplyr, ggplot2, readr, lubridate and friends</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-label="9"></a>))</span>
+<span id="cb6-10"><a href="#cb6-10" aria-label="10"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-label="11"></a><span class="co"># maps and looking at data</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-label="12"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
+<span id="cb6-13"><a href="#cb6-13" aria-label="13"></a>  <span class="st">"ozmaps"</span>,     <span class="co"># Australian state boundaries to draw the toads on</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-label="14"></a>  <span class="st">"sf"</span>,         <span class="co"># draws those boundaries</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-label="15"></a>  <span class="st">"visdat"</span>      <span class="co"># vis_dat(), for seeing what is missing</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-label="16"></a>))</span>
+<span id="cb6-17"><a href="#cb6-17" aria-label="17"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-label="18"></a><span class="co"># pipelines</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-label="19"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
+<span id="cb6-20"><a href="#cb6-20" aria-label="20"></a>  <span class="st">"crew"</span>,       <span class="co"># parallel workers</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-label="21"></a>  <span class="st">"fs"</span>,         <span class="co"># file and directory handling</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-label="22"></a>  <span class="st">"quarto"</span>,     <span class="co"># rendering reports from the pipeline</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-label="23"></a>  <span class="st">"tarchetypes"</span>,</span>
+<span id="cb6-24"><a href="#cb6-24" aria-label="24"></a>  <span class="st">"targets"</span>,</span>
+<span id="cb6-25"><a href="#cb6-25" aria-label="25"></a>  <span class="st">"visNetwork"</span>  <span class="co"># what tar_visnetwork() draws the graph with</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-label="26"></a>))</span>
+<span id="cb6-27"><a href="#cb6-27" aria-label="27"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-label="28"></a><span class="co"># spatial, for the last three hours</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-label="29"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"geotargets"</span>, <span class="st">"terra"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>{visNetwork}</code> is what draws the dependency graph when you run <code>tar_visnetwork()</code>, which we use constantly, and it is not installed along with targets.</p>
+<p><code>{sf}</code> and <code>{terra}</code> are the slowest to install, so it is worth doing them now rather than on the day.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Watch out: sf and terra need system libraries">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -367,15 +423,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="installing-tflow-and-fnmate" class="level3">
 <h3 class="anchored" data-anchor-id="installing-tflow-and-fnmate">Installing {tflow} and {fnmate}</h3>
-<p>Two of <a href="https://milesmcbain.xyz">Miles McBain’s</a> packages that make pipelines much less tedious. <code>{tflow}</code> sets a project up, and <code>{fnmate}</code> writes the skeleton of a function from a call you wish you could make.</p>
-<p>Neither is on CRAN. They live on Miles’ r-universe, which is an ordinary website that R installs from, so there is no git and no compiler involved:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-label="1"></a><span class="fu">install.packages</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-label="2"></a>  <span class="fu">c</span>(<span class="st">"tflow"</span>, <span class="st">"fnmate"</span>),</span>
-<span id="cb4-3"><a href="#cb4-3" aria-label="3"></a>  <span class="at">repos =</span> <span class="fu">c</span>(</span>
-<span id="cb4-4"><a href="#cb4-4" aria-label="4"></a>    <span class="st">"https://milesmcbain.r-universe.dev"</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-label="5"></a>    <span class="st">"https://cloud.r-project.org"</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-label="6"></a>  )</span>
-<span id="cb4-7"><a href="#cb4-7" aria-label="7"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Two of <a href="https://milesmcbain.xyz">Miles McBain’s</a> packages that make pipelines much less tedious. <code>{tflow}</code> sets a project up, and <code>{fnmate}</code> writes the skeleton of a function from the call you wish you could make.</p>
+<p>Neither is on CRAN. They live on Miles’ r-universe, which is an ordinary website that R installs from, so there is no git and no compiler involved.</p>
+<p>Try this first:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-label="1"></a><span class="fu">install.packages</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-label="2"></a>  <span class="fu">c</span>(<span class="st">"tflow"</span>, <span class="st">"fnmate"</span>),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-label="3"></a>  <span class="at">repos =</span> <span class="fu">c</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-label="4"></a>    <span class="st">"https://milesmcbain.r-universe.dev"</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-label="5"></a>    <span class="st">"https://cloud.r-project.org"</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-label="6"></a>  )</span>
+<span id="cb7-7"><a href="#cb7-7" aria-label="7"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If that is blocked, you can download each package as a file and install it from your own machine. No compiler needed, because r-universe has already built it.</p>
+<p>First, get the address of the file you need. Run the following in R, based on your operating system. The example is for <code>{fnmate}</code>; for <code>{tflow}</code>, swap the package name and version, which are listed at <a href="https://milesmcbain.r-universe.dev" class="uri">https://milesmcbain.r-universe.dev</a>.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Linux</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-label="1"></a><span class="fu">paste0</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-label="2"></a>  <span class="st">"https://milesmcbain.r-universe.dev/bin/windows/contrib/"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-label="3"></a>  <span class="fu">substr</span>(<span class="fu">getRversion</span>(), <span class="dv">1</span>, <span class="dv">3</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-label="4"></a>  <span class="st">"/fnmate_0.2.1.zip"</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-label="5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Open that address in your browser, which downloads the file. Then install it, giving R the path to where it landed:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-label="1"></a><span class="fu">install.packages</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-label="2"></a>  <span class="st">"C:/Users/you/Downloads/fnmate_0.2.1.zip"</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-label="3"></a>  <span class="at">repos =</span> <span class="cn">NULL</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-label="4"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-label="1"></a>arch <span class="ot">&lt;-</span> <span class="cf">if</span> (R.version<span class="sc">$</span>arch <span class="sc">==</span> <span class="st">"aarch64"</span>) <span class="st">"big-sur-arm64"</span> <span class="cf">else</span> <span class="st">"big-sur-x86_64"</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-label="2"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-label="3"></a><span class="fu">paste0</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-label="4"></a>  <span class="st">"https://milesmcbain.r-universe.dev/bin/macosx/"</span>, arch, <span class="st">"/contrib/"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-label="5"></a>  <span class="fu">substr</span>(<span class="fu">getRversion</span>(), <span class="dv">1</span>, <span class="dv">3</span>),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-label="6"></a>  <span class="st">"/fnmate_0.2.1.tgz"</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-label="7"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Open that address in your browser, then:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-label="1"></a><span class="fu">install.packages</span>(<span class="st">"~/Downloads/fnmate_0.2.1.tgz"</span>, <span class="at">repos =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p>On Linux there is no binary, so you want the source and a working toolchain, which you have almost certainly already got:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-label="1"></a><span class="fu">install.packages</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-label="2"></a>  <span class="st">"https://milesmcbain.r-universe.dev/src/contrib/fnmate_0.2.1.tar.gz"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-label="3"></a>  <span class="at">repos =</span> <span class="cn">NULL</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-label="4"></a>  <span class="at">type =</span> <span class="st">"source"</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-label="5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-important callout-titled" title="It's OK if these don't install">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -386,53 +481,66 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Some machines will not install from anywhere except CRAN, and if yours is one of them, that’s a setting somebody else chose and not a problem with you.</p>
-<p>Nothing in this course depends on either package. They save typing. Everywhere I use one, I will also show what it wrote, so you can type the same thing yourself.</p>
+<p>Some machines will not install from anywhere except CRAN, and if yours is one of them, that is a setting somebody else chose and not a problem with you.</p>
+<p>Nothing in this course depends on either package. They save typing, and they are nice things to know exist. Everywhere I use one, I will also show what it wrote, so you can type the same thing yourself.</p>
+<p>Please do email me if you hit this, because I would like to know how common it is.</p>
 </div>
 </div>
 </section>
 <section id="checking-it-all-worked" class="level3">
 <h3 class="anchored" data-anchor-id="checking-it-all-worked">Checking it all worked</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-label="1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-label="2"></a>  <span class="st">"arrow"</span>, <span class="st">"broom"</span>, <span class="st">"conflicted"</span>, <span class="st">"crew"</span>, <span class="st">"fs"</span>, <span class="st">"geotargets"</span>, <span class="st">"gganimate"</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-label="3"></a>  <span class="st">"gifski"</span>, <span class="st">"here"</span>, <span class="st">"janitor"</span>, <span class="st">"leaflet"</span>, <span class="st">"ozmaps"</span>, <span class="st">"quarto"</span>, <span class="st">"sf"</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-label="4"></a>  <span class="st">"tarchetypes"</span>, <span class="st">"targets"</span>, <span class="st">"terra"</span>, <span class="st">"tidyverse"</span>, <span class="st">"visdat"</span>, <span class="st">"visNetwork"</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-label="5"></a>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-label="6"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-label="7"></a><span class="fu">sapply</span>(pkgs, requireNamespace, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Everything should come back <code>TRUE</code>.</p>
+<p>Run this in R. It should print <code>TRUE</code> for everything except possibly <code>tflow</code> and <code>fnmate</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-label="1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-label="2"></a>  <span class="st">"arrow"</span>, <span class="st">"conflicted"</span>, <span class="st">"crew"</span>, <span class="st">"fnmate"</span>, <span class="st">"fs"</span>, <span class="st">"geodist"</span>, <span class="st">"geotargets"</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-label="3"></a>  <span class="st">"here"</span>, <span class="st">"janitor"</span>, <span class="st">"ozmaps"</span>, <span class="st">"quarto"</span>, <span class="st">"sf"</span>, <span class="st">"tarchetypes"</span>, <span class="st">"targets"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-label="4"></a>  <span class="st">"terra"</span>, <span class="st">"tflow"</span>, <span class="st">"tidyverse"</span>, <span class="st">"visdat"</span>, <span class="st">"visNetwork"</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-label="5"></a>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-label="6"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-label="7"></a><span class="fu">sapply</span>(pkgs, requireNamespace, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If that looks right, you are set.</p>
+</section>
+<section id="if-something-will-not-install" class="level3">
+<h3 class="anchored" data-anchor-id="if-something-will-not-install">If something will not install</h3>
+<p>Let me know!</p>
+<p>Installation problems are almost always specific to one machine, and they are much faster to solve with two people looking at them. They are also, genuinely, not a reflection on you. Every one of us has lost an afternoon to a package that would not build. Ask me for some horror stories.</p>
 </section>
 </section>
 <section id="the-course-data-and-the-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="the-course-data-and-the-analysis">The course data and the analysis</h2>
-<p>We work on cane toad occurrence records from the <a href="https://www.ala.org.au">Atlas of Living Australia</a>, plus eleven other species we meet later.</p>
-<p>The analysis lives in its own repository, <a href="https://github.com/njtierney/toad-analysis">toad-analysis</a>. This code from <code>usethis</code> downloads it and opens it as an RStudio project:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-label="1"></a>usethis<span class="sc">::</span><span class="fu">use_course</span>(<span class="st">"njtierney/toad-analysis"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If that doesn’t work on your machine, the same files are in this zip — clicking the link should download it: <a href="https://github.com/njtierney/toad-analysis/archive/refs/heads/main.zip" class="uri">https://github.com/njtierney/toad-analysis/archive/refs/heads/main.zip</a></p>
-<p>Unzip it, and open <code>toad-analysis</code> as an RStudio project. It looks like this:</p>
+<p>We work on cane toad occurrence records from the <a href="https://www.ala.org.au">Atlas of Living Australia</a>.</p>
+<p>This course is heavy on writing code yourself. Rather than downloading a finished analysis at the start, you’ll build it up as we go. I’ll send you the data and the scripts at the point in each session where you need them, and you type, run and change them from there.</p>
+<p>The analysis I work from lives in its own repository, <a href="https://github.com/njtierney/toad-analysis">toad-analysis</a>, and you’re welcome to look at it.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Watch out: toad-analysis is changing">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Watch out: toad-analysis is changing
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is the first time this course has run, and <code>toad-analysis</code> will change constantly while it does. What’s there today may not match what’s there next week, or what we did in the last session.</p>
+<p>Treat it as something to look at, not something to build on. The code you write in the sessions is the code that matters.</p>
+</div>
+</div>
+<p>It looks like this:</p>
 <pre><code>toad-analysis/
 ├── data/
 │   ├── cane-toad-wildnet-to-1999.parquet
 │   ├── cane-toad-wildnet-to-2010.parquet
-│   ├── cane-toad-wildnet.parquet
-│   ├── cane-toad-all.parquet
 │   └── ...
 ├── ch1/
-│   └── 01-flat-script.R
+│   ├── 01-flat-script.R
+│   ├── 01-flat-doc.qmd
+│   └── ch1-targets/
 ├── ch2/
-│   ├── R/
-│   ├── analysis.R
-│   └── toad-report.qmd
 └── ...</code></pre>
-<p>There is one folder for each chapter, and each is the same analysis a little further along. The data is shared between all of them.</p>
-<p>Nine data files, because chapter 1 is about what happens when more data arrives. You start with the Queensland records up to 1999 and change the filename when the rest turns up — first more years, then more sources.</p>
-<p>That is a working analysis, and it is yours.</p>
-<p>Run it, read it, break it, improve it.</p>
-<p>We spend the whole course changing it, and by the end it will be a pipeline.</p>
-<p>The data is parquet rather than CSV, which is why it is small enough to hand out.</p>
-<p><code>arrow::read_parquet()</code> reads one and gives you back an ordinary data frame.</p>
+<p>There is one folder for each chapter. Each one is the same analysis, a step further along: a script, the same thing as a Quarto document, and in some chapters the same thing again as a targets pipeline. The data is shared between all of them.</p>
+<p>We start with the Queensland records up to 1999, and more data turns up as the course goes on.</p>
+<p>The data is parquet rather than CSV, which is why it is small enough to hand out. <code>arrow::read_parquet()</code> reads one and gives you back an ordinary data frame.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Going deeper: where the data came from">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -441,7 +549,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><code>data-raw/01-download-occurrences.R</code> in the book’s repo is the script that made these files. It uses <a href="https://galah.ala.org.au/R/">galah</a> to query the Atlas of Living Australia.</p>
 <p>You do not need to run it, and I would rather you didn’t on the day, because thirty people hitting the same API at once is not a good time for anybody. But it is there, it is commented, and it’s a reasonable model for the kind of script that belongs in <code>data-raw/</code>.</p>
@@ -453,24 +561,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="what-to-bring" class="level2">
 <h2 class="anchored" data-anchor-id="what-to-bring">What to bring</h2>
 <p><strong>An analysis of your own.</strong></p>
-<p>Something with more than one step. Something where you have caught yourself re-running the whole thing because you were not sure what was still current. It doesn’t need to be tidy, and it’s more useful to me if it isn’t.</p>
-<p>We convert your own work in the final session, and you will get more from that hour than from any example I could invent, because you already care about the answer.</p>
-<p>If you’d rather not share your own, that’s completely fine. I have one for us to work on either way.</p>
+<p>Something with more than one step. Something where you have caught yourself re-running the whole thing because you were not sure what was still current. It doesn’t need to be tidy, and honestly it’s more useful to me if it isn’t.</p>
+<p>We convert your own work in the final session, and you will get more out of that hour than any example I could invent, because you already care about the answer.</p>
+<p>If you’d rather not share your own, that’s completely fine. I have an analysis for us to work on either way.</p>
 
 
 </section>
 <section class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="">Links</h2>
 <ul>
+<li><a href="https://en.wikipedia.org/wiki/Make_(software)">Make</a></li>
+<li><a href="https://quarto.org/docs/authoring/callouts.html">Quarto: callout blocks</a></li>
 <li><a href="https://gentle-targets.njtierney.com" class="uri">https://gentle-targets.njtierney.com</a></li>
 <li><a href="https://github.com/njtierney/gentletargets" class="uri">https://github.com/njtierney/gentletargets</a></li>
+<li><a href="https://github.com/njtierney/toad-analysis" class="uri">https://github.com/njtierney/toad-analysis</a></li>
 <li><a href="https://cran.r-project.org/" class="uri">https://cran.r-project.org/</a></li>
 <li><a href="https://posit.co/download/rstudio-desktop/">RStudio</a></li>
 <li><a href="https://positron.posit.co/">Positron</a></li>
 <li><a href="https://milesmcbain.xyz">Miles McBain’s</a></li>
+<li><a href="https://milesmcbain.r-universe.dev" class="uri">https://milesmcbain.r-universe.dev</a></li>
 <li><a href="https://www.ala.org.au">Atlas of Living Australia</a></li>
 <li><a href="https://github.com/njtierney/toad-analysis">toad-analysis</a></li>
-<li><a href="https://github.com/njtierney/toad-analysis/archive/refs/heads/main.zip" class="uri">https://github.com/njtierney/toad-analysis/archive/refs/heads/main.zip</a></li>
 <li><a href="https://galah.ala.org.au/R/">galah</a></li>
 </ul>
 </section>
@@ -878,13 +989,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Introduction to targets and geotargets">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to targets and geotargets</span></span>
+      <a href="./index.html" class="pagination-link" aria-label="Welcome">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./why-pipelines.html" class="pagination-link" aria-label="Why pipelines?">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Why pipelines?</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why pipelines?</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

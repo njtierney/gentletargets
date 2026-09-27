@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Why pipelines? – Introduction to targets and geotargets</title>
+<title>1&nbsp; Why pipelines? – Introduction to targets and geotargets</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -122,7 +122,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./why-pipelines.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Why pipelines?</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./why-pipelines.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why pipelines?</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -153,7 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to targets and geotargets</span></span></a>
+ <span class="menu-text">Welcome</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -165,7 +165,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./why-pipelines.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Why pipelines?</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why pipelines?</span></span></a>
   </div>
 </li>
     </ul>
@@ -179,28 +179,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#why-pipelines" id="toc-why-pipelines" class="nav-link" data-scroll-target="#why-pipelines"><span class="header-section-number">2.1</span> Why pipelines?</a></li>
-  <li><a href="#live-coding" id="toc-live-coding" class="nav-link" data-scroll-target="#live-coding"><span class="header-section-number">2.2</span> Live coding</a></li>
-  <li><a href="#the-question" id="toc-the-question" class="nav-link" data-scroll-target="#the-question"><span class="header-section-number">2.3</span> The question</a></li>
-  <li><a href="#replicate-it" id="toc-replicate-it" class="nav-link" data-scroll-target="#replicate-it"><span class="header-section-number">2.4</span> Replicate it</a>
+  <li><a href="#why-pipelines" id="toc-why-pipelines" class="nav-link" data-scroll-target="#why-pipelines"><span class="header-section-number">1.1</span> Why pipelines?</a></li>
+  <li><a href="#live-coding" id="toc-live-coding" class="nav-link" data-scroll-target="#live-coding"><span class="header-section-number">1.2</span> Live coding</a></li>
+  <li><a href="#the-question" id="toc-the-question" class="nav-link" data-scroll-target="#the-question"><span class="header-section-number">1.3</span> The question</a></li>
+  <li><a href="#replicate-it" id="toc-replicate-it" class="nav-link" data-scroll-target="#replicate-it"><span class="header-section-number">1.4</span> Replicate it</a>
   <ul class="collapse">
   <li><a href="#what-have-we-got" id="toc-what-have-we-got" class="nav-link" data-scroll-target="#what-have-we-got">What have we got?</a></li>
   <li><a href="#where-are-they" id="toc-where-are-they" class="nav-link" data-scroll-target="#where-are-they">Where are they?</a></li>
   <li><a href="#find-the-front" id="toc-find-the-front" class="nav-link" data-scroll-target="#find-the-front">Find the front</a></li>
   <li><a href="#how-far-did-it-move" id="toc-how-far-did-it-move" class="nav-link" data-scroll-target="#how-far-did-it-move">How far did it move?</a></li>
   </ul></li>
-  <li><a href="#from-a-script-to-a-document" id="toc-from-a-script-to-a-document" class="nav-link" data-scroll-target="#from-a-script-to-a-document"><span class="header-section-number">2.5</span> From a script to a document</a></li>
-  <li><a href="#tidy-it-up" id="toc-tidy-it-up" class="nav-link" data-scroll-target="#tidy-it-up"><span class="header-section-number">2.6</span> Tidy it up</a></li>
-  <li><a href="#someone-wants-the-data" id="toc-someone-wants-the-data" class="nav-link" data-scroll-target="#someone-wants-the-data"><span class="header-section-number">2.7</span> Someone wants the data</a></li>
-  <li><a href="#rendering-a-document-to-write-a-dataset" id="toc-rendering-a-document-to-write-a-dataset" class="nav-link" data-scroll-target="#rendering-a-document-to-write-a-dataset"><span class="header-section-number">2.8</span> Rendering a document to write a dataset?</a></li>
-  <li><a href="#how-else-could-you-lay-this-project-out" id="toc-how-else-could-you-lay-this-project-out" class="nav-link" data-scroll-target="#how-else-could-you-lay-this-project-out"><span class="header-section-number">2.9</span> How else could you lay this project out?</a>
+  <li><a href="#from-a-script-to-a-document" id="toc-from-a-script-to-a-document" class="nav-link" data-scroll-target="#from-a-script-to-a-document"><span class="header-section-number">1.5</span> From a script to a document</a></li>
+  <li><a href="#tidy-it-up" id="toc-tidy-it-up" class="nav-link" data-scroll-target="#tidy-it-up"><span class="header-section-number">1.6</span> Tidy it up</a></li>
+  <li><a href="#someone-wants-the-data" id="toc-someone-wants-the-data" class="nav-link" data-scroll-target="#someone-wants-the-data"><span class="header-section-number">1.7</span> Someone wants the data</a></li>
+  <li><a href="#rendering-a-document-to-write-a-dataset" id="toc-rendering-a-document-to-write-a-dataset" class="nav-link" data-scroll-target="#rendering-a-document-to-write-a-dataset"><span class="header-section-number">1.8</span> Rendering a document to write a dataset?</a></li>
+  <li><a href="#how-else-could-you-lay-this-project-out" id="toc-how-else-could-you-lay-this-project-out" class="nav-link" data-scroll-target="#how-else-could-you-lay-this-project-out"><span class="header-section-number">1.9</span> How else could you lay this project out?</a>
   <ul class="collapse">
   <li><a href="#how-to-pick-a-good-one" id="toc-how-to-pick-a-good-one" class="nav-link" data-scroll-target="#how-to-pick-a-good-one">How to pick a good one</a></li>
   </ul></li>
-  <li><a href="#more-data-arrives" id="toc-more-data-arrives" class="nav-link" data-scroll-target="#more-data-arrives"><span class="header-section-number">2.10</span> More data arrives</a></li>
-  <li><a href="#stop" id="toc-stop" class="nav-link" data-scroll-target="#stop"><span class="header-section-number">2.11</span> Stop</a></li>
-  <li><a href="#what-does-a-pipeline-look-like" id="toc-what-does-a-pipeline-look-like" class="nav-link" data-scroll-target="#what-does-a-pipeline-look-like"><span class="header-section-number">2.12</span> What does a pipeline look like?</a></li>
-  <li><a href="#but-first-your-code" id="toc-but-first-your-code" class="nav-link" data-scroll-target="#but-first-your-code"><span class="header-section-number">2.13</span> But first: your code</a></li>
+  <li><a href="#more-data-arrives" id="toc-more-data-arrives" class="nav-link" data-scroll-target="#more-data-arrives"><span class="header-section-number">1.10</span> More data arrives</a></li>
+  <li><a href="#stop" id="toc-stop" class="nav-link" data-scroll-target="#stop"><span class="header-section-number">1.11</span> Stop</a></li>
+  <li><a href="#what-does-a-pipeline-look-like" id="toc-what-does-a-pipeline-look-like" class="nav-link" data-scroll-target="#what-does-a-pipeline-look-like"><span class="header-section-number">1.12</span> What does a pipeline look like?</a></li>
+  <li><a href="#but-first-your-code" id="toc-but-first-your-code" class="nav-link" data-scroll-target="#but-first-your-code"><span class="header-section-number">1.13</span> But first: your code</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   <li>Links</li>
   </ul>
@@ -211,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-why-pipelines" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Why pipelines?</span></span></h1>
+<h1 class="title"><span id="sec-why-pipelines" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why pipelines?</span></span></h1>
 </div>
 
 
@@ -246,13 +246,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>What you need this session</strong></p>
 <ul>
 <li>A session of RStudio open</li>
-<li>The <code>toad-analysis</code> project. See <a href="./setup.html">Setup</a>.</li>
+<li>The packages from <a href="./setup.html">Setup</a></li>
+<li>The script and data I send you at the start of the session</li>
 </ul>
 </section>
 <p><img src="images/adult-cane-toad.jpg" class="img-fluid"></p>
 <p><em>Photo by <a href="https://www.flickr.com/photos/briangratwicke/">Brian Gratwicke</a> Found on <a href="https://commons.wikimedia.org/wiki/File:Adult_Cane_toad.jpg">wikimedia</a>, licensed under <a href="https://creativecommons.org/licenses/by/2.0/deed.en">CC BY 2.0</a></em></p>
-<section id="why-pipelines" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="why-pipelines"><span class="header-section-number">2.1</span> Why pipelines?</h2>
+<section id="why-pipelines" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="why-pipelines"><span class="header-section-number">1.1</span> Why pipelines?</h2>
 <p>Data analysis is iterative. Cleaning, exploring and modelling rarely run start to finish without problems. Every step forward you take, sometimes takes you a couple back. E.g., finding a problem in a plot takes you to a problem with data cleaning.</p>
 <p>I find a common pattern then is to re-run the code - from the top. It’s easier to just start “carte blanche” each time, because it’s too hard to work out hiwch parts of the analysis need re-running.</p>
 <p>This can be fine. If you’re lucky! Often times your analysis can be so big - in terms of taking time, or managing complexity, that re-running it costs real time.</p>
@@ -261,21 +262,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In R, <a href="https://books.ropensci.org/targets/">targets</a> is one of these pipeline toolkits, and it’s what we will be learning how to use.</p>
 <p>The rest of this chapter is mostly hands-on programming. We will start with some toad data.</p>
 </section>
-<section id="live-coding" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="live-coding"><span class="header-section-number">2.2</span> Live coding</h2>
+<section id="live-coding" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="live-coding"><span class="header-section-number">1.2</span> Live coding</h2>
 <ul>
 <li>Reading in cane toad data</li>
 <li>Exploring it</li>
 <li>Save the script</li>
 </ul>
 </section>
-<section id="the-question" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="the-question"><span class="header-section-number">2.3</span> The question</h2>
+<section id="the-question" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="the-question"><span class="header-section-number">1.3</span> The question</h2>
 <p>Toads were released at one place, on one date, and they spread west. So how far west did the edge get, decade by decade, and how far did it move each time?</p>
 <p>Somebody has emailed you some files: A script, and some data.</p>
 </section>
-<section id="replicate-it" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="replicate-it"><span class="header-section-number">2.4</span> Replicate it</h2>
+<section id="replicate-it" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="replicate-it"><span class="header-section-number">1.4</span> Replicate it</h2>
 <p>Below you can view the entire analysis that I will live code:</p>
 <p>::: {.callout-note title = “The live code”, collapse=“true”}</p>
 <p>Here’s the script, a piece at a time. The code below is read straight out of <code>ch1/01-flat-script.R</code>, so what you see here is what’s in the file.</p>
@@ -14154,8 +14155,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="from-a-script-to-a-document" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="from-a-script-to-a-document"><span class="header-section-number">2.5</span> From a script to a document</h2>
+<section id="from-a-script-to-a-document" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="from-a-script-to-a-document"><span class="header-section-number">1.5</span> From a script to a document</h2>
 <p>Someone wants to read this! Can you convert this into a quarto document?</p>
 <p>So put it in a Quarto document. Each part of the script goes in a chunk, with a sentence or two around it saying what it does.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Your Turn">
@@ -14172,8 +14173,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="tidy-it-up" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="tidy-it-up"><span class="header-section-number">2.6</span> Tidy it up</h2>
+<section id="tidy-it-up" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="tidy-it-up"><span class="header-section-number">1.6</span> Tidy it up</h2>
 <p>Now make it read like a document.</p>
 <ul>
 <li><strong>Libraries at the top.</strong> Put all <code>library()</code> calls at the top.</li>
@@ -14198,8 +14199,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="someone-wants-the-data" class="level2" data-number="2.7">
-<h2 data-number="2.7" class="anchored" data-anchor-id="someone-wants-the-data"><span class="header-section-number">2.7</span> Someone wants the data</h2>
+<section id="someone-wants-the-data" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="someone-wants-the-data"><span class="header-section-number">1.7</span> Someone wants the data</h2>
 <p>Your work is getting noticed!</p>
 <p>A colleague asks you for the data with the distances added.</p>
 <p>Sure, you say, you can add this to the quarto file?</p>
@@ -14225,8 +14226,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="rendering-a-document-to-write-a-dataset" class="level2" data-number="2.8">
-<h2 data-number="2.8" class="anchored" data-anchor-id="rendering-a-document-to-write-a-dataset"><span class="header-section-number">2.8</span> Rendering a document to write a dataset?</h2>
+<section id="rendering-a-document-to-write-a-dataset" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="rendering-a-document-to-write-a-dataset"><span class="header-section-number">1.8</span> Rendering a document to write a dataset?</h2>
 <p>It’s a lot!</p>
 <p>But something about this feels a bit strange? You are rendering a document, and you get:</p>
 <ul>
@@ -14243,8 +14244,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>I’m not saying don’t save data! That’s a good thing.</p>
 <p>But I am saying that writing a file should be a step that something keeps track of, rather than something that happens on the way past.</p>
 </section>
-<section id="how-else-could-you-lay-this-project-out" class="level2" data-number="2.9">
-<h2 data-number="2.9" class="anchored" data-anchor-id="how-else-could-you-lay-this-project-out"><span class="header-section-number">2.9</span> How else could you lay this project out?</h2>
+<section id="how-else-could-you-lay-this-project-out" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="how-else-could-you-lay-this-project-out"><span class="header-section-number">1.9</span> How else could you lay this project out?</h2>
 <p>Is there another way you could lay the project out?</p>
 <p><strong>One long script.</strong> That’s what you were sent. It works, and it’s where everybody starts.</p>
 <p><strong>Numbered scripts.</strong> Split it into <code>01-read.R</code>, <code>02-clean.R</code>, <code>03-front.R</code> and <code>04-distance.R</code>.</p>
@@ -14292,13 +14293,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="more-data-arrives" class="level2" data-number="2.10">
-<h2 data-number="2.10" class="anchored" data-anchor-id="more-data-arrives"><span class="header-section-number">2.10</span> More data arrives</h2>
+<section id="more-data-arrives" class="level2" data-number="1.10">
+<h2 data-number="1.10" class="anchored" data-anchor-id="more-data-arrives"><span class="header-section-number">1.10</span> More data arrives</h2>
 <p>Your boss (me) emails you the records up to 2010, <code>cane-toad-wildnet-to-2010.parquet</code>.</p>
 <p>Can you run it again?</p>
 </section>
-<section id="stop" class="level2" data-number="2.11">
-<h2 data-number="2.11" class="anchored" data-anchor-id="stop"><span class="header-section-number">2.11</span> Stop</h2>
+<section id="stop" class="level2" data-number="1.11">
+<h2 data-number="1.11" class="anchored" data-anchor-id="stop"><span class="header-section-number">1.11</span> Stop</h2>
 <p>Stop here, and look at what’s on your disk.</p>
 <p>You have a script, a document, a rendered report, and a CSV. Some of them were made from the 1999 data and some from the 2010 data.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Your Turn">
@@ -14321,8 +14322,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Nothing errored at any point. Every file looks fine. You just can’t tell which of them are current.</p>
 </section>
-<section id="what-does-a-pipeline-look-like" class="level2" data-number="2.12">
-<h2 data-number="2.12" class="anchored" data-anchor-id="what-does-a-pipeline-look-like"><span class="header-section-number">2.12</span> What does a pipeline look like?</h2>
+<section id="what-does-a-pipeline-look-like" class="level2" data-number="1.12">
+<h2 data-number="1.12" class="anchored" data-anchor-id="what-does-a-pipeline-look-like"><span class="header-section-number">1.12</span> What does a pipeline look like?</h2>
 <p>Here’s one I prepared earlier.</p>
 <p><code>ch1/ch1-targets/</code>, written as a targets pipeline.</p>
 <div class="cell">
@@ -14383,8 +14384,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="but-first-your-code" class="level2" data-number="2.13">
-<h2 data-number="2.13" class="anchored" data-anchor-id="but-first-your-code"><span class="header-section-number">2.13</span> But first: your code</h2>
+<section id="but-first-your-code" class="level2" data-number="1.13">
+<h2 data-number="1.13" class="anchored" data-anchor-id="but-first-your-code"><span class="header-section-number">1.13</span> But first: your code</h2>
 <p>We won’t jump straight into targets, not yet!</p>
 <p>There are mechanics to it, and tools of the trade, and introducing all of it now would be too much at once.</p>
 <p>So let’s start somewhere smaller. Next session we take the script apart and rebuild it as functions.</p>
