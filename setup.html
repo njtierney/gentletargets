@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Setup – Introduction to targets and geotargets</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./why-pipelines.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-b45b7b0fa9169e986df15f1ef60a279c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-d8528540b0a15326d4cb04146e0d53d8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./setup.html">Setup</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introduction to targets and geotargets</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://https://github.com/njtierney/gentletargets" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to targets and geotargets</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./setup.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Setup</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./why-pipelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Why pipelines?</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#how-this-book-works" id="toc-how-this-book-works" class="nav-link active" data-scroll-target="#how-this-book-works">How this book works</a>
+  <ul class="collapse">
+  <li><a href="#the-book-is-longer-than-the-course" id="toc-the-book-is-longer-than-the-course" class="nav-link" data-scroll-target="#the-book-is-longer-than-the-course">The book is longer than the course</a></li>
+  <li><a href="#how-we-will-work" id="toc-how-we-will-work" class="nav-link" data-scroll-target="#how-we-will-work">How we will work</a></li>
+  <li><a href="#the-boxes" id="toc-the-boxes" class="nav-link" data-scroll-target="#the-boxes">The boxes</a></li>
+  <li><a href="#the-code" id="toc-the-code" class="nav-link" data-scroll-target="#the-code">The code</a></li>
+  <li><a href="#where-everything-lives" id="toc-where-everything-lives" class="nav-link" data-scroll-target="#where-everything-lives">Where everything lives</a></li>
+  </ul></li>
+  <li><a href="#what-to-install" id="toc-what-to-install" class="nav-link" data-scroll-target="#what-to-install">What to install</a>
+  <ul class="collapse">
+  <li><a href="#r" id="toc-r" class="nav-link" data-scroll-target="#r">R</a></li>
+  <li><a href="#the-r-packages" id="toc-the-r-packages" class="nav-link" data-scroll-target="#the-r-packages">The R packages</a></li>
+  <li><a href="#installing-tflow-and-fnmate" id="toc-installing-tflow-and-fnmate" class="nav-link" data-scroll-target="#installing-tflow-and-fnmate">Installing {tflow} and {fnmate}</a></li>
+  <li><a href="#checking-it-all-worked" id="toc-checking-it-all-worked" class="nav-link" data-scroll-target="#checking-it-all-worked">Checking it all worked</a></li>
+  </ul></li>
+  <li><a href="#the-course-data-and-the-analysis" id="toc-the-course-data-and-the-analysis" class="nav-link" data-scroll-target="#the-course-data-and-the-analysis">The course data and the analysis</a></li>
+  <li><a href="#what-to-bring" id="toc-what-to-bring" class="nav-link" data-scroll-target="#what-to-bring">What to bring</a></li>
+  <li>Links</li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://https://github.com/njtierney/gentletargets/edit/main/setup.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://https://github.com/njtierney/gentletargets/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-setup" class="quarto-section-identifier">Setup</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Three things before we start:</p>
+<ol type="1">
+<li>How this book is put together,</li>
+<li>What to install, and</li>
+<li>What to bring.</li>
+</ol>
+<section id="how-this-book-works" class="level2">
+<h2 class="anchored" data-anchor-id="how-this-book-works">How this book works</h2>
+<section id="the-book-is-longer-than-the-course" class="level3">
+<h3 class="anchored" data-anchor-id="the-book-is-longer-than-the-course">The book is longer than the course</h3>
+<p>The course is twelve hours of teaching. There is more in the book than we can get through, which is deliberate.</p>
+<p>I’ll change what we cover on the day depending on how we are going, and the rest stays here for you to come back to.</p>
+</section>
+<section id="how-we-will-work" class="level3">
+<h3 class="anchored" data-anchor-id="how-we-will-work">How we will work</h3>
+<p>Mostly by typing.</p>
+<p>I write code, you write it too, and we break things together.</p>
+<p>A lot of this course is about what happens when you change your mind halfway through an analysis.</p>
+<p>That means we’ll spend real time with things in a broken or half finished state, on purpose. If that feels uncomfortable, good, because it’s the state most analyses actually live in.</p>
+<p>You don’t need to keep up with everything I type. Every code block has a copy button, and anything extra I write on the day goes up on GitHub.</p>
+</section>
+<section id="the-boxes" class="level3">
+<h3 class="anchored" data-anchor-id="the-boxes">The boxes</h3>
+<p>Five kinds of box turn up, each with its own colour and icon:</p>
+<ul>
+<li><strong>✏️ Your Turn</strong> - something for you to do. Most we do together. The ones that ask what you think have no wrong answers.</li>
+<li><strong>🕰️ Some history</strong> - where an idea came from.</li>
+<li><strong>🔎 Going deeper</strong> - optional detail, a longer example, or a pointer to the paper. Boxes titled <strong>Read more</strong> point at the post or talk a section is adapted from.</li>
+<li><strong>⚠️ Watch out</strong> - a place people commonly trip.</li>
+<li><strong>🚨</strong> - the things that will bite you.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="Your Turn">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Your Turn
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Exercises look like this. Most give you something to run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-label="1"></a>R.version.string</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Some just ask you something. Here is the one I care about:</p>
+<ol type="1">
+<li>Think of the last analysis you had to re-run from scratch. What made you do it?</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Restart R after a big install">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Restart R after a big install
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you install a package that is already loaded, R can end up half on the old version and half on the new one. You then get errors that make no sense and do not survive a restart.</p>
+<p>So once you have worked through the installs below, restart R.</p>
+<ul>
+<li><code>Ctrl + Shift + F10</code> on Windows</li>
+<li><code>Cmd + Shift + 0</code> on Mac</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="the-code" class="level3">
+<h3 class="anchored" data-anchor-id="the-code">The code</h3>
+<p>Lines starting with <code>#&gt;</code> are <strong>output</strong>, not code. You don’t type those.</p>
+<p>We use the base pipe, <code>|&gt;</code>, throughout, rather than <code>%&gt;%</code>. If you’re used to <code>%&gt;%</code>, everything here works the same way.</p>
+</section>
+<section id="where-everything-lives" class="level3">
+<h3 class="anchored" data-anchor-id="where-everything-lives">Where everything lives</h3>
+<ul>
+<li><strong>This book</strong> - <a href="https://gentle-targets.njtierney.com" class="uri">https://gentle-targets.njtierney.com</a></li>
+<li><strong>The source</strong> - <a href="https://github.com/njtierney/gentletargets" class="uri">https://github.com/njtierney/gentletargets</a>. Every page has an “Edit this page” link that goes straight to the file that made it.</li>
+</ul>
+<p><strong>If you find a mistake, please tell me.</strong> Every page has a link to open an issue. I really appreciate knowing.</p>
+</section>
+</section>
+<section id="what-to-install" class="level2">
+<h2 class="anchored" data-anchor-id="what-to-install">What to install</h2>
+<section id="r" class="level3">
+<h3 class="anchored" data-anchor-id="r">R</h3>
+<p>You need <strong>R 4.5.0 or later</strong>, from <a href="https://cran.r-project.org/" class="uri">https://cran.r-project.org/</a>. Check with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-label="1"></a>R.version.string</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You also need an editor. I recommend <a href="https://posit.co/download/rstudio-desktop/">RStudio</a>, and <a href="https://positron.posit.co/">Positron</a> works too.</p>
+</section>
+<section id="the-r-packages" class="level3">
+<h3 class="anchored" data-anchor-id="the-r-packages">The R packages</h3>
+<p>This will take a few minutes.</p>
+<p>They are grouped by what they are for, rather than alphabetically, so you can see what you are installing.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-label="1"></a><span class="co"># the analysis itself</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-label="2"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-label="3"></a>  <span class="st">"arrow"</span>,      <span class="co"># reads the parquet data files</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-label="4"></a>  <span class="st">"broom"</span>,      <span class="co"># turns a model into a data frame</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-label="5"></a>  <span class="st">"conflicted"</span>, <span class="co"># makes function masking an error rather than a surprise</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-label="6"></a>  <span class="st">"here"</span>,       <span class="co"># file paths that work from anywhere in a project</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-label="7"></a>  <span class="st">"janitor"</span>,    <span class="co"># clean_names(), and other tidying</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-label="8"></a>  <span class="st">"tidyverse"</span>   <span class="co"># dplyr, ggplot2, readr, lubridate and friends</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-label="9"></a>))</span>
+<span id="cb3-10"><a href="#cb3-10" aria-label="10"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-label="11"></a><span class="co"># making pictures</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-label="12"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
+<span id="cb3-13"><a href="#cb3-13" aria-label="13"></a>  <span class="st">"gganimate"</span>,  <span class="co"># the march of the cane toads</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-label="14"></a>  <span class="st">"gifski"</span>,     <span class="co"># renders the animation to a gif</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-label="15"></a>  <span class="st">"leaflet"</span>,    <span class="co"># interactive maps</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-label="16"></a>  <span class="st">"ozmaps"</span>,     <span class="co"># Australian state boundaries to draw the toads on</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-label="17"></a>  <span class="st">"visdat"</span>      <span class="co"># vis_dat(), for seeing what is missing</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-label="18"></a>))</span>
+<span id="cb3-19"><a href="#cb3-19" aria-label="19"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-label="20"></a><span class="co"># pipelines</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-label="21"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
+<span id="cb3-22"><a href="#cb3-22" aria-label="22"></a>  <span class="st">"crew"</span>,       <span class="co"># parallel workers</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-label="23"></a>  <span class="st">"fs"</span>,         <span class="co"># file and directory handling</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-label="24"></a>  <span class="st">"quarto"</span>,     <span class="co"># rendering reports from the pipeline</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-label="25"></a>  <span class="st">"tarchetypes"</span>,</span>
+<span id="cb3-26"><a href="#cb3-26" aria-label="26"></a>  <span class="st">"targets"</span>,</span>
+<span id="cb3-27"><a href="#cb3-27" aria-label="27"></a>  <span class="st">"visNetwork"</span>  <span class="co"># what tar_visnetwork() draws the graph with</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-label="28"></a>))</span>
+<span id="cb3-29"><a href="#cb3-29" aria-label="29"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-label="30"></a><span class="co"># spatial, for the last three hours</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-label="31"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"geotargets"</span>, <span class="st">"sf"</span>, <span class="st">"terra"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>{visNetwork}</code> is what draws the dependency graph when you run <code>tar_visnetwork()</code>, which we use constantly, and it is not a dependency of targets.</p>
+<p><code>{sf}</code> and <code>{terra}</code> are only needed at the end, but they are the slowest to install, so it is worth doing now rather than on the day.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Watch out: sf and terra need system libraries">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Watch out: sf and terra need system libraries
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>On Mac and Linux these two build against GDAL, GEOS and PROJ. If <code>install.packages("sf")</code> fails with something about a missing header, that’s why.</p>
+<p>On Mac, <code>brew install gdal</code> usually sorts it. On Ubuntu, the <code>libgdal-dev</code> package. On Windows the binaries come with everything included and it just works.</p>
+<p>Please email me if you hit this before the day, because it is much easier to fix with two people looking at it.</p>
+</div>
+</div>
+</section>
+<section id="installing-tflow-and-fnmate" class="level3">
+<h3 class="anchored" data-anchor-id="installing-tflow-and-fnmate">Installing {tflow} and {fnmate}</h3>
+<p>Two of <a href="https://milesmcbain.xyz">Miles McBain’s</a> packages that make pipelines much less tedious. <code>{tflow}</code> sets a project up, and <code>{fnmate}</code> writes the skeleton of a function from a call you wish you could make.</p>
+<p>Neither is on CRAN. They live on Miles’ r-universe, which is an ordinary website that R installs from, so there is no git and no compiler involved:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-label="1"></a><span class="fu">install.packages</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-label="2"></a>  <span class="fu">c</span>(<span class="st">"tflow"</span>, <span class="st">"fnmate"</span>),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-label="3"></a>  <span class="at">repos =</span> <span class="fu">c</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-label="4"></a>    <span class="st">"https://milesmcbain.r-universe.dev"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-label="5"></a>    <span class="st">"https://cloud.r-project.org"</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-label="6"></a>  )</span>
+<span id="cb4-7"><a href="#cb4-7" aria-label="7"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-important callout-titled" title="It's OK if these don't install">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>It’s OK if these don’t install
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Some machines will not install from anywhere except CRAN, and if yours is one of them, that’s a setting somebody else chose and not a problem with you.</p>
+<p>Nothing in this course depends on either package. They save typing. Everywhere I use one, I will also show what it wrote, so you can type the same thing yourself.</p>
+</div>
+</div>
+</section>
+<section id="checking-it-all-worked" class="level3">
+<h3 class="anchored" data-anchor-id="checking-it-all-worked">Checking it all worked</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-label="1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-label="2"></a>  <span class="st">"arrow"</span>, <span class="st">"broom"</span>, <span class="st">"conflicted"</span>, <span class="st">"crew"</span>, <span class="st">"fs"</span>, <span class="st">"geotargets"</span>, <span class="st">"gganimate"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-label="3"></a>  <span class="st">"gifski"</span>, <span class="st">"here"</span>, <span class="st">"janitor"</span>, <span class="st">"leaflet"</span>, <span class="st">"ozmaps"</span>, <span class="st">"quarto"</span>, <span class="st">"sf"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-label="4"></a>  <span class="st">"tarchetypes"</span>, <span class="st">"targets"</span>, <span class="st">"terra"</span>, <span class="st">"tidyverse"</span>, <span class="st">"visdat"</span>, <span class="st">"visNetwork"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-label="5"></a>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-label="6"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-label="7"></a><span class="fu">sapply</span>(pkgs, requireNamespace, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Everything should come back <code>TRUE</code>.</p>
+</section>
+</section>
+<section id="the-course-data-and-the-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="the-course-data-and-the-analysis">The course data and the analysis</h2>
+<p>We work on cane toad occurrence records from the <a href="https://www.ala.org.au">Atlas of Living Australia</a>, plus eleven other species we meet later.</p>
+<p>The analysis lives in its own repository, <a href="https://github.com/njtierney/toad-analysis">toad-analysis</a>. This code from <code>usethis</code> downloads it and opens it as an RStudio project:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-label="1"></a>usethis<span class="sc">::</span><span class="fu">use_course</span>(<span class="st">"njtierney/toad-analysis"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If that doesn’t work on your machine, the same files are in this zip — clicking the link should download it: <a href="https://github.com/njtierney/toad-analysis/archive/refs/heads/main.zip" class="uri">https://github.com/njtierney/toad-analysis/archive/refs/heads/main.zip</a></p>
+<p>Unzip it, and open <code>toad-analysis</code> as an RStudio project. It looks like this:</p>
+<pre><code>toad-analysis/
+├── data/
+│   ├── cane-toad-wildnet-to-1999.parquet
+│   ├── cane-toad-wildnet-to-2010.parquet
+│   ├── cane-toad-wildnet.parquet
+│   ├── cane-toad-all.parquet
+│   └── ...
+├── ch1/
+│   └── 01-flat-script.R
+├── ch2/
+│   ├── R/
+│   ├── analysis.R
+│   └── toad-report.qmd
+└── ...</code></pre>
+<p>There is one folder for each chapter, and each is the same analysis a little further along. The data is shared between all of them.</p>
+<p>Nine data files, because chapter 1 is about what happens when more data arrives. You start with the Queensland records up to 1999 and change the filename when the rest turns up — first more years, then more sources.</p>
+<p>That is a working analysis, and it is yours.</p>
+<p>Run it, read it, break it, improve it.</p>
+<p>We spend the whole course changing it, and by the end it will be a pipeline.</p>
+<p>The data is parquet rather than CSV, which is why it is small enough to hand out.</p>
+<p><code>arrow::read_parquet()</code> reads one and gives you back an ordinary data frame.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Going deeper: where the data came from">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Going deeper: where the data came from
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>data-raw/01-download-occurrences.R</code> in the book’s repo is the script that made these files. It uses <a href="https://galah.ala.org.au/R/">galah</a> to query the Atlas of Living Australia.</p>
+<p>You do not need to run it, and I would rather you didn’t on the day, because thirty people hitting the same API at once is not a good time for anybody. But it is there, it is commented, and it’s a reasonable model for the kind of script that belongs in <code>data-raw/</code>.</p>
+<p>Records under a non-commercial licence have been removed, so what you have is a little smaller than what the Atlas will give you.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="what-to-bring" class="level2">
+<h2 class="anchored" data-anchor-id="what-to-bring">What to bring</h2>
+<p><strong>An analysis of your own.</strong></p>
+<p>Something with more than one step. Something where you have caught yourself re-running the whole thing because you were not sure what was still current. It doesn’t need to be tidy, and it’s more useful to me if it isn’t.</p>
+<p>We convert your own work in the final session, and you will get more from that hour than from any example I could invent, because you already care about the answer.</p>
+<p>If you’d rather not share your own, that’s completely fine. I have one for us to work on either way.</p>
+
+
+</section>
+<section class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="">Links</h2>
+<ul>
+<li><a href="https://gentle-targets.njtierney.com" class="uri">https://gentle-targets.njtierney.com</a></li>
+<li><a href="https://github.com/njtierney/gentletargets" class="uri">https://github.com/njtierney/gentletargets</a></li>
+<li><a href="https://cran.r-project.org/" class="uri">https://cran.r-project.org/</a></li>
+<li><a href="https://posit.co/download/rstudio-desktop/">RStudio</a></li>
+<li><a href="https://positron.posit.co/">Positron</a></li>
+<li><a href="https://milesmcbain.xyz">Miles McBain’s</a></li>
+<li><a href="https://www.ala.org.au">Atlas of Living Australia</a></li>
+<li><a href="https://github.com/njtierney/toad-analysis">toad-analysis</a></li>
+<li><a href="https://github.com/njtierney/toad-analysis/archive/refs/heads/main.zip" class="uri">https://github.com/njtierney/toad-analysis/archive/refs/heads/main.zip</a></li>
+<li><a href="https://galah.ala.org.au/R/">galah</a></li>
+</ul>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/gentle-targets\.njtierney\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Introduction to targets and geotargets">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to targets and geotargets</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./why-pipelines.html" class="pagination-link" aria-label="Why pipelines?">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Why pipelines?</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Copyright 2026, Nicholas Tierney</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://https://github.com/njtierney/gentletargets/edit/main/setup.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://https://github.com/njtierney/gentletargets/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

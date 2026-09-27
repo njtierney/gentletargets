@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,16 @@
 
 <title>Introduction to targets and geotargets</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -32,17 +38,17 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./setup.html" rel="next">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-b45b7b0fa9169e986df15f1ef60a279c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a680f39748eefeef055d76a0b2f2728d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-d8528540b0a15326d4cb04146e0d53d8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -117,6 +123,18 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to targets and geotargets</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setup</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./why-pipelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Why pipelines?</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -127,19 +145,26 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome"><span class="header-section-number">1</span> Welcome</a></li>
-  <li><a href="#course-materials" id="toc-course-materials" class="nav-link" data-scroll-target="#course-materials"><span class="header-section-number">2</span> Course Materials</a></li>
+  <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome">Welcome</a></li>
+  <li><a href="#course-materials" id="toc-course-materials" class="nav-link" data-scroll-target="#course-materials"><span class="header-section-number">1</span> Course Materials</a></li>
+  <li><a href="#details" id="toc-details" class="nav-link" data-scroll-target="#details"><span class="header-section-number">2</span> Details</a>
+  <ul class="collapse">
+  <li><a href="#introduction-to-targets-9-hours" id="toc-introduction-to-targets-9-hours" class="nav-link" data-scroll-target="#introduction-to-targets-9-hours"><span class="header-section-number">2.1</span> Introduction to {targets} (9 hours)</a></li>
+  <li><a href="#geospatial-workflows-with-geotargets-3-hours" id="toc-geospatial-workflows-with-geotargets-3-hours" class="nav-link" data-scroll-target="#geospatial-workflows-with-geotargets-3-hours"><span class="header-section-number">2.2</span> Geospatial workflows with {geotargets} (3 hours)</a></li>
+  </ul></li>
   <li><a href="#schedule" id="toc-schedule" class="nav-link" data-scroll-target="#schedule"><span class="header-section-number">3</span> Schedule</a>
   <ul class="collapse">
-  <li><a href="#why-pipelines" id="toc-why-pipelines" class="nav-link" data-scroll-target="#why-pipelines"><span class="header-section-number">3.1</span> Why Pipelines?</a></li>
-  <li><a href="#starting-with-function-writing-out-a-workflow" id="toc-starting-with-function-writing-out-a-workflow" class="nav-link" data-scroll-target="#starting-with-function-writing-out-a-workflow"><span class="header-section-number">3.2</span> Starting with function: writing out a workflow</a></li>
-  <li><a href="#debugging-functions" id="toc-debugging-functions" class="nav-link" data-scroll-target="#debugging-functions"><span class="header-section-number">3.3</span> Debugging functions</a></li>
-  <li><a href="#getting-started-with-targets" id="toc-getting-started-with-targets" class="nav-link" data-scroll-target="#getting-started-with-targets"><span class="header-section-number">3.4</span> Getting started with {targets}</a></li>
-  <li><a href="#deeper-workflow-with-targets" id="toc-deeper-workflow-with-targets" class="nav-link" data-scroll-target="#deeper-workflow-with-targets"><span class="header-section-number">3.5</span> Deeper workflow with {targets}</a></li>
-  <li><a href="#advanced-targets-features" id="toc-advanced-targets-features" class="nav-link" data-scroll-target="#advanced-targets-features"><span class="header-section-number">3.6</span> Advanced Targets Features</a></li>
-  <li><a href="#introduction-to-geospatial-data" id="toc-introduction-to-geospatial-data" class="nav-link" data-scroll-target="#introduction-to-geospatial-data"><span class="header-section-number">3.7</span> Introduction to Geospatial Data</a></li>
-  <li><a href="#geospatial-pipelines-with-geotargets" id="toc-geospatial-pipelines-with-geotargets" class="nav-link" data-scroll-target="#geospatial-pipelines-with-geotargets"><span class="header-section-number">3.8</span> Geospatial Pipelines with {geotargets}</a></li>
-  <li><a href="#production-workflows-and-best-practices" id="toc-production-workflows-and-best-practices" class="nav-link" data-scroll-target="#production-workflows-and-best-practices"><span class="header-section-number">3.9</span> Production Workflows and Best Practices</a></li>
+  <li><a href="#why-pipelines" id="toc-why-pipelines" class="nav-link" data-scroll-target="#why-pipelines"><span class="header-section-number">3.1</span> 1. Why pipelines?</a></li>
+  <li><a href="#starting-with-functions-writing-out-a-workflow" id="toc-starting-with-functions-writing-out-a-workflow" class="nav-link" data-scroll-target="#starting-with-functions-writing-out-a-workflow"><span class="header-section-number">3.2</span> 2. Starting with functions: writing out a workflow</a></li>
+  <li><a href="#debugging-functions" id="toc-debugging-functions" class="nav-link" data-scroll-target="#debugging-functions"><span class="header-section-number">3.3</span> 3. Debugging functions</a></li>
+  <li><a href="#getting-started-with-targets" id="toc-getting-started-with-targets" class="nav-link" data-scroll-target="#getting-started-with-targets"><span class="header-section-number">3.4</span> 4. Getting started with {targets}</a></li>
+  <li><a href="#deeper-workflow-with-targets" id="toc-deeper-workflow-with-targets" class="nav-link" data-scroll-target="#deeper-workflow-with-targets"><span class="header-section-number">3.5</span> 5. Deeper workflow with {targets}</a></li>
+  <li><a href="#branching-and-crew" id="toc-branching-and-crew" class="nav-link" data-scroll-target="#branching-and-crew"><span class="header-section-number">3.6</span> 6. Branching and {crew}</a></li>
+  <li><a href="#geospatial-pipelines-with-geotargets" id="toc-geospatial-pipelines-with-geotargets" class="nav-link" data-scroll-target="#geospatial-pipelines-with-geotargets"><span class="header-section-number">3.7</span> 7. Geospatial pipelines with {geotargets}</a></li>
+  <li><a href="#production-workflows-and-best-practices" id="toc-production-workflows-and-best-practices" class="nav-link" data-scroll-target="#production-workflows-and-best-practices"><span class="header-section-number">3.8</span> 8. Production workflows and best practices</a></li>
+  <li><a href="#appendix-a-running-targets-on-an-hpc" id="toc-appendix-a-running-targets-on-an-hpc" class="nav-link" data-scroll-target="#appendix-a-running-targets-on-an-hpc"><span class="header-section-number">3.9</span> Appendix A: Running targets on an HPC</a></li>
+  <li><a href="#appendix-b-cloud-storage-and-cloud-workers" id="toc-appendix-b-cloud-storage-and-cloud-workers" class="nav-link" data-scroll-target="#appendix-b-cloud-storage-and-cloud-workers"><span class="header-section-number">3.10</span> Appendix B: Cloud storage and cloud workers</a></li>
+  <li>Links</li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://https://github.com/njtierney/gentletargets/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://https://github.com/njtierney/gentletargets/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -178,13 +203,29 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="welcome" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Welcome</h1>
+<section id="welcome" class="level1 unnumbered">
+<h1 class="unnumbered">Welcome</h1>
 <p>Welcome to targets and geotargets! This course will teach you how to build reproducible computational pipelines for data analysis and geospatial workflows.</p>
 </section>
-<section id="course-materials" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Course Materials</h1>
+<section id="course-materials" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Course Materials</h1>
 <p>Materials will be added here as we progress through the course.</p>
+</section>
+<section id="details" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Details</h1>
+<section id="introduction-to-targets-9-hours" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="introduction-to-targets-9-hours"><span class="header-section-number">2.1</span> Introduction to {targets} (9 hours)</h2>
+<p>Data analysis is an iterative process. Data cleaning, exploratory data analysis (EDA), and model fitting are rarely run without a hitch from start to finish. Each step takes time, and often requires revisiting earlier steps to correct for newly discovered problems. For example, in performing EDA, you can unearth a text issue that requires revisiting data cleaning. When you are finally done with the analysis, you will need to reproduce it to check it all works as expected.</p>
+<p>To reproduce the analysis, there is a temptation to run the code again from the top, which may take a long time. You can save time by saving model outputs, but if you make a change to an earlier data cleaning step, you’ll need to update everything that depends on that. And sometimes it isn’t exactly clear which components depend on each other. If you’ve found yourself saying: “I’ll just run it all from scratch again”, you have likely experienced this.</p>
+<p>You can write code to manage these dependencies, but this is a hard problem. Fortunately, “pipeline tools” are an existing approach to manage these dependencies. They take care of the details of watching which files and relevant code changes, and only run the necessary parts. The {targets} R package is one popular pipeline approach, providing extensive documentation and user support. However, it presents a different coding practice that might not be familiar.</p>
+<p>In this course walkthrough, I will gently introduce the ideas behind {targets}, and by the end we will be able to live code a data analysis using {targets} from scratch, warts and all.</p>
+<p>My goal is that you will be able to write modular functions suitable for pipelines, understand how {targets} tracks changes in data and code, and develop skills for debugging common pipeline issues. Through practical examples, participants will discover how adopting a pipeline approach prevents unnecessary re-computation and creates more maintainable, transparent workflows.</p>
+</section>
+<section id="geospatial-workflows-with-geotargets-3-hours" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="geospatial-workflows-with-geotargets-3-hours"><span class="header-section-number">2.2</span> Geospatial workflows with {geotargets} (3 hours)</h2>
+<p>Geospatial data presents a technical challenge for {targets}, as packages like {terra} create objects containing C++ pointers rather than actual data. This makes them incompatible with standard data storage (serialization) methods. The {geotargets} package solves these challenges by providing specialized target factories that handle these aspects automatically.</p>
+<p>In this next section we will demonstrate how to integrate {geotargets} into {targets} workflows for both raster and vector data, using geospatial packages {terra} and {sf}.</p>
+<p>Participants will learn to build efficient geospatial pipelines that can handle computationally intensive operations—which may take hours or days to complete—while avoiding re-running entire analyses when only specific components change, dramatically improving productivity in geospatial data science.</p>
 <p><a href="https://gentle-targets.njtierney.com" class="uri">https://gentle-targets.njtierney.com</a></p>
 <p><strong>Prerequisites</strong></p>
 <ul>
@@ -201,38 +242,46 @@ ul.task-list li input[type="checkbox"] {
 <li>How to use {targets} with {geotargets}</li>
 </ul>
 </section>
+</section>
 <section id="schedule" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Schedule</h1>
+<p>Eight chapters, ninety minutes each. The course is exercise heavy, so most of that time is yours rather than mine.</p>
 <section id="why-pipelines" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="why-pipelines"><span class="header-section-number">3.1</span> Why Pipelines?</h2>
+<h2 data-number="3.1" class="anchored" data-anchor-id="why-pipelines"><span class="header-section-number">3.1</span> 1. Why pipelines?</h2>
+<p><em>90 minutes</em></p>
 <ul>
 <li>Where do I start? What do I run first?</li>
-<li>Common problems with pipelines/workflows</li>
-<li>Intro to {targets}</li>
-<li>Concepts in {targets}: functions, targets, graphs/networks</li>
+<li>Working with occurrence records: reading and cleaning</li>
+<li>What happens when more data arrives</li>
+<li>Why a document that writes files cannot be trusted</li>
+<li>Common problems with pipelines and workflows, and the ways people lay an analysis out</li>
+<li>Concepts in {targets}: functions, results worth keeping, graphs and networks</li>
 <li>Where we are going</li>
 </ul>
 </section>
-<section id="starting-with-function-writing-out-a-workflow" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="starting-with-function-writing-out-a-workflow"><span class="header-section-number">3.2</span> Starting with function: writing out a workflow</h2>
+<section id="starting-with-functions-writing-out-a-workflow" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="starting-with-functions-writing-out-a-workflow"><span class="header-section-number">3.2</span> 2. Starting with functions: writing out a workflow</h2>
+<p><em>90 minutes</em></p>
 <ul>
-<li>Defining out functions as the unit of understanding</li>
+<li>Writing out a workflow with functions, before any of them exist</li>
+<li>Defining functions as the unit of understanding</li>
 <li>Ideal properties of functions</li>
 <li>Properties to avoid in functions</li>
-<li>Writing out a workflow with functions</li>
 <li>Using {fnmate} to accelerate function creation</li>
 </ul>
 </section>
 <section id="debugging-functions" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="debugging-functions"><span class="header-section-number">3.3</span> Debugging functions</h2>
+<h2 data-number="3.3" class="anchored" data-anchor-id="debugging-functions"><span class="header-section-number">3.3</span> 3. Debugging functions</h2>
+<p><em>90 minutes</em></p>
 <ul>
-<li>brower()</li>
-<li>debug() and debugonce()</li>
-<li>options(recover)</li>
+<li><code>browser()</code></li>
+<li><code>debug()</code> and <code>debugonce()</code></li>
+<li><code>options(recover)</code></li>
 </ul>
 </section>
 <section id="getting-started-with-targets" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="getting-started-with-targets"><span class="header-section-number">3.4</span> Getting started with {targets}</h2>
+<h2 data-number="3.4" class="anchored" data-anchor-id="getting-started-with-targets"><span class="header-section-number">3.4</span> 4. Getting started with {targets}</h2>
+<p><em>90 minutes</em></p>
 <ul>
 <li>Using {tflow} to set up a targets project
 <ul>
@@ -245,40 +294,40 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 </section>
 <section id="deeper-workflow-with-targets" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="deeper-workflow-with-targets"><span class="header-section-number">3.5</span> Deeper workflow with {targets}</h2>
+<h2 data-number="3.5" class="anchored" data-anchor-id="deeper-workflow-with-targets"><span class="header-section-number">3.5</span> 5. Deeper workflow with {targets}</h2>
+<p><em>90 minutes</em></p>
 <ul>
 <li>Data read in with <code>tar_read()</code></li>
+<li>Seeing the dependency graph with <code>tar_visnetwork()</code></li>
+<li>Predicting what will rebuild, then checking with <code>tar_outdated()</code></li>
 <li>Rendering reports with <code>tar_quarto()</code></li>
 <li>Using keyboard shortcuts to load, inspect</li>
 <li>Using <code>tar_workspaces()</code> to debug issues</li>
 <li>Common problems when writing pipelines</li>
 </ul>
 </section>
-<section id="advanced-targets-features" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="advanced-targets-features"><span class="header-section-number">3.6</span> Advanced Targets Features</h2>
+<section id="branching-and-crew" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="branching-and-crew"><span class="header-section-number">3.6</span> 6. Branching and {crew}</h2>
+<p><em>90 minutes</em></p>
 <ul>
-<li>Using {crew} to paralellise workflow</li>
-<li>Branching</li>
-<li>Using targets with HPC</li>
+<li>Branching over many of something</li>
+<li>Using {crew} to parallelise a workflow</li>
 </ul>
 </section>
-<section id="introduction-to-geospatial-data" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="introduction-to-geospatial-data"><span class="header-section-number">3.7</span> Introduction to Geospatial Data</h2>
+<section id="geospatial-pipelines-with-geotargets" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="geospatial-pipelines-with-geotargets"><span class="header-section-number">3.7</span> 7. Geospatial pipelines with {geotargets}</h2>
+<p><em>90 minutes</em></p>
 <ul>
 <li>Spatial data challenges</li>
 <li>Introduction to {terra} and {sf}</li>
-</ul>
-</section>
-<section id="geospatial-pipelines-with-geotargets" class="level2" data-number="3.8">
-<h2 data-number="3.8" class="anchored" data-anchor-id="geospatial-pipelines-with-geotargets"><span class="header-section-number">3.8</span> Geospatial Pipelines with {geotargets}</h2>
-<ul>
 <li>Why {geotargets}?</li>
-<li><code>tar_terra_rast()</code>, <code>tar_terra_vect()</code>, etc</li>
+<li><code>tar_terra_rast()</code>, <code>tar_terra_vect()</code>, and friends</li>
 <li>Building a geospatial pipeline</li>
 </ul>
 </section>
-<section id="production-workflows-and-best-practices" class="level2" data-number="3.9">
-<h2 data-number="3.9" class="anchored" data-anchor-id="production-workflows-and-best-practices"><span class="header-section-number">3.9</span> Production Workflows and Best Practices</h2>
+<section id="production-workflows-and-best-practices" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="production-workflows-and-best-practices"><span class="header-section-number">3.8</span> 8. Production workflows and best practices</h2>
+<p><em>90 minutes</em></p>
 <ul>
 <li>Organising large projects</li>
 <li>Convert your own work into a pipeline</li>
@@ -286,8 +335,32 @@ ul.task-list li input[type="checkbox"] {
 <li>Resources and next steps</li>
 <li>Open Q&amp;A</li>
 </ul>
+</section>
+<section id="appendix-a-running-targets-on-an-hpc" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="appendix-a-running-targets-on-an-hpc"><span class="header-section-number">3.9</span> Appendix A: Running targets on an HPC</h2>
+<p>Not taught, because there is no cluster in the room.</p>
+<ul>
+<li><code>crew.cluster::crew_controller_slurm()</code></li>
+<li>Controller groups: heavy targets to the cluster, light ones stay local</li>
+<li>Why workers do not source <code>_targets.R</code>, and what that breaks</li>
+</ul>
+</section>
+<section id="appendix-b-cloud-storage-and-cloud-workers" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="appendix-b-cloud-storage-and-cloud-workers"><span class="header-section-number">3.10</span> Appendix B: Cloud storage and cloud workers</h2>
+<p>Also not taught, for the same reason.</p>
+<ul>
+<li>Keeping the targets store in S3 with <code>repository = "aws"</code> and <code>tar_resources_aws()</code></li>
+<li>Which file targets you still want kept local, and why</li>
+<li><code>crew.aws.batch</code> for workers rather than storage</li>
+</ul>
 
 
+</section>
+<section class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="">Links</h2>
+<ul>
+<li><a href="https://gentle-targets.njtierney.com" class="uri">https://gentle-targets.njtierney.com</a></li>
+</ul>
 </section>
 </section>
 
@@ -692,6 +765,15 @@ ul.task-list li input[type="checkbox"] {
     }
   });
   </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./setup.html" class="pagination-link" aria-label="Setup">
+        <span class="nav-page-text">Setup</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
