@@ -11,16 +11,25 @@ Language: en-GB
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports: 
-  geotargets,
-  here,
-  knitr,
-  rmarkdown,
-  sf,
-  spelling,
-  targets,
-  terra,
-  tidyverse,
-  tarchetypes,
-  visNetwork
+    arrow,
+    conflicted,
+    crew,
+    fs,
+    galah,
+    geodist,
+    geotargets,
+    here,
+    janitor,
+    knitr,
+    ozmaps,
+    rmarkdown,
+    sf,
+    spelling,
+    targets,
+    tarchetypes,
+    terra,
+    tidyverse,
+    visNetwork,
+    visdat
 URL: https://github.com/njtierney/gentletargets
 BugReports: https://github.com/njtierney/gentletargets/issues
