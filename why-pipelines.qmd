@@ -25,7 +25,8 @@ So, this analysis follows a story of using various releases of existing cane toa
 **What you need this session**
 
 - A session of RStudio open
-- The `toad-analysis` project. See [Setup](setup.qmd).
+- The packages from [Setup](setup.qmd)
+- The script and data I send you at the start of the session
 
 :::
 

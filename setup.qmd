@@ -10,105 +10,163 @@ Three things before we start:
 
 ### The book is longer than the course
 
-The course is twelve hours of teaching. There is more in the book than we can get through, which is deliberate.
+The course is twelve hours of teaching material. There is more in the book than we can get through, and that's deliberate. I'll change what we cover on the day, depending on how we are going.
 
-I'll change what we cover on the day depending on how we are going, and the rest stays here for you to come back to.
+During the course we will work through things live, and the content stays here for you to come back to.
 
 ### How we will work
 
-Mostly by typing.
+Mostly by typing. I will write code, you write it too, and we will break things together, then fix them.
 
-I write code, you write it too, and we break things together.
+A lot of this course is about what happens when you change your mind halfway through an analysis, or when new data turns up. That means we'll spend real time with things half finished, on purpose. It's the state most analyses actually live in.
 
-A lot of this course is about what happens when you change your mind halfway through an analysis.
+You'll be doing a lot of the "driving" during exercises, which is one of the best ways to learn.
 
-That means we'll spend real time with things in a broken or half finished state, on purpose. If that feels uncomfortable, good, because it's the state most analyses actually live in.
-
-You don't need to keep up with everything I type. Every code block has a copy button, and anything extra I write on the day goes up on GitHub.
+You don't need to keep up with everything I type. There is a copy button on every code block, and anything extra I write in class I will share on GitHub.
 
 ### The boxes
 
-Five kinds of box turn up, each with its own colour and icon:
+Five kinds of box turn up throughout, each with its own colour and icon:
 
-- **✏️ Your Turn** - something for you to do. Most we do together. The ones that ask what you think have no wrong answers.
-- **🕰️ Some history** - where an idea came from.
-- **🔎 Going deeper** - optional detail, a longer example, or a pointer to the paper. Boxes titled **Read more** point at the post or talk a section is adapted from.
+- **✏️ Your Turn** - something for you to do. Most of these we do together in the session, and a few are there for afterwards. The ones that ask what you think have no wrong answers.
+- **🕰️ Some history** - where things came from.
+- **🔎 Going deeper** - optional extra detail, a longer example, or a list you might want later. Boxes titled **Read more** point at the blog post or talk a section is adapted from.
 - **⚠️ Watch out** - a place people commonly trip.
-- **🚨** - the things that will bite you.
+- **🚨** - the things that will likely create issues.
 
 ::: {.callout-note title="Your Turn"}
 
-Exercises look like this. Most give you something to run:
+Exercises look like this. Most of them give you something to run:
 
 ```r
 R.version.string
 ```
 
-Some just ask you something. Here is the one I care about:
+Some of them just ask you something.
 
-1. Think of the last analysis you had to re-run from scratch. What made you do it?
+Here is the one I actually care about:
+
+1. Think of the last analysis you re-ran from scratch because you weren't sure which parts were still current. What made you do it?
+
+There are no wrong answers.
+
+:::
+
+::: {.callout-caution title="Some history: the tab"}
+
+targets describes itself as "Make-like", and [Make](https://en.wikipedia.org/wiki/Make_(software)) is where the idea started. Stuart Feldman wrote it in 1976, to stop people rebuilding things that hadn't changed.
+
+Make has one famous wart. The lines that do the work must start with a tab, not spaces. Feldman has said that was a mistake, caused by the parser he used in the first version, and kept ever since so that old files keep working.
+
+Indent with spaces by accident and you get:
+
+```
+Makefile:2: *** missing separator.  Stop.
+```
+
+A `_targets.R` file is R, so none of that applies.
+
+:::
+
+::: {.callout-tip title="Going deeper: how these boxes are made" collapse="true"}
+
+You just clicked this - that is the collapsing demonstrated.
+
+These are Quarto callouts, and there is nothing clever going on. Each one is a fenced div with a class on it:
+
+````markdown
+::: {.callout-note title="Your Turn"}
+
+Something for you to do.
+
+:::
+````
+
+The colours and the icons come from a stylesheet in the book's repo, not from Quarto. If you want them in your own work, the docs are at [Quarto: callout blocks](https://quarto.org/docs/authoring/callouts.html).
 
 :::
 
 ::: {.callout-important title="Restart R after a big install"}
 
-If you install a package that is already loaded, R can end up half on the old version and half on the new one. You then get errors that make no sense and do not survive a restart.
+If you install a package that is already loaded in your session, R can end up half on the old version and half on the new one. You then get errors that make no sense and do not survive a restart, which is a miserable way to spend twenty minutes.
 
 So once you have worked through the installs below, restart R.
+
+In RStudio that is
 
 - `Ctrl + Shift + F10` on Windows
 - `Cmd + Shift + 0` on Mac
 
 :::
 
+Some boxes are collapsed, showing only their title, like the **Going deeper** one above. Click the title to open one.
+
 ### The code
 
-Lines starting with `#>` are **output**, not code. You don't type those.
+Code blocks look like this:
 
-We use the base pipe, `|>`, throughout, rather than `%>%`. If you're used to `%>%`, everything here works the same way.
+```r
+library(dplyr)
+
+airquality |>
+  count(Month)
+#>   Month  n
+#> 1     5 31
+#> 2     6 30
+#> 3     7 31
+#> 4     8 31
+#> 5     9 30
+```
+
+Lines starting with `#>` are **output**, not code. You do not type those. They are what R prints back, shown so you can check you got the same thing.
+
+Longer blocks have line numbers in the margin so that I can say "look at line 4" and we are both looking at the same line. Short blocks do not, because there is nothing to point at.
+
+We use the base pipe, `|>`, rather than `%>%` throughout. If you are used to `%>%`, everything here works the same way.
 
 ### Where everything lives
 
 - **This book** - <https://gentle-targets.njtierney.com>
-- **The source** - <https://github.com/njtierney/gentletargets>. Every page has an "Edit this page" link that goes straight to the file that made it.
+- **The book's source** - <https://github.com/njtierney/gentletargets>. Every page has an "Edit this page" link, which goes straight to the file that made it.
+- **The analysis I work from** - <https://github.com/njtierney/toad-analysis>. It changes a lot while the course runs; more on that below.
 
-**If you find a mistake, please tell me.** Every page has a link to open an issue. I really appreciate knowing.
+**If you find a mistake, please tell me.** Every page has a link to open an issue, or you can email me. I really appreciate knowing if there is an error!
 
 ## What to install
 
+If you can, it is worthwhile to install the below before the first session.
+
 ### R
 
-You need **R 4.5.0 or later**, from <https://cran.r-project.org/>. Check with:
+You need **R 4.5.0 or later**, from <https://cran.r-project.org/>. Check what you have with:
 
 ```r
 R.version.string
 ```
 
-You also need an editor. I recommend [RStudio](https://posit.co/download/rstudio-desktop/), and [Positron](https://positron.posit.co/) works too.
+R 4.5.0 came out in April 2025, so this shouldn't be a stretch. If you are on something older, the base pipe `|>` and the short anonymous function `\(x)` both need at least 4.2.0, and they turn up throughout the book.
+
+You also need an editor. I recommend [RStudio](https://posit.co/download/rstudio-desktop/). [Positron](https://positron.posit.co/) works too, and I am happy to talk through the differences.
 
 ### The R packages
 
-This will take a few minutes.
-
-They are grouped by what they are for, rather than alphabetically, so you can see what you are installing.
+This will take a few minutes. They are grouped by what they are for, so you can see what you are installing:
 
 ```r
 # the analysis itself
 install.packages(c(
   "arrow",      # reads the parquet data files
-  "broom",      # turns a model into a data frame
   "conflicted", # makes function masking an error rather than a surprise
+  "geodist",    # distances across the surface of the earth
   "here",       # file paths that work from anywhere in a project
   "janitor",    # clean_names(), and other tidying
   "tidyverse"   # dplyr, ggplot2, readr, lubridate and friends
 ))
 
-# making pictures
+# maps and looking at data
 install.packages(c(
-  "gganimate",  # the march of the cane toads
-  "gifski",     # renders the animation to a gif
-  "leaflet",    # interactive maps
   "ozmaps",     # Australian state boundaries to draw the toads on
+  "sf",         # draws those boundaries
   "visdat"      # vis_dat(), for seeing what is missing
 ))
 
@@ -123,12 +181,12 @@ install.packages(c(
 ))
 
 # spatial, for the last three hours
-install.packages(c("geotargets", "sf", "terra"))
+install.packages(c("geotargets", "terra"))
 ```
 
-`{visNetwork}` is what draws the dependency graph when you run `tar_visnetwork()`, which we use constantly, and it is not a dependency of targets.
+`{visNetwork}` is what draws the dependency graph when you run `tar_visnetwork()`, which we use constantly, and it is not installed along with targets.
 
-`{sf}` and `{terra}` are only needed at the end, but they are the slowest to install, so it is worth doing now rather than on the day.
+`{sf}` and `{terra}` are the slowest to install, so it is worth doing them now rather than on the day.
 
 ::: {.callout-warning title="Watch out: sf and terra need system libraries"}
 
@@ -142,9 +200,11 @@ Please email me if you hit this before the day, because it is much easier to fix
 
 ### Installing {tflow} and {fnmate}
 
-Two of [Miles McBain's](https://milesmcbain.xyz) packages that make pipelines much less tedious. `{tflow}` sets a project up, and `{fnmate}` writes the skeleton of a function from a call you wish you could make.
+Two of [Miles McBain's](https://milesmcbain.xyz) packages that make pipelines much less tedious. `{tflow}` sets a project up, and `{fnmate}` writes the skeleton of a function from the call you wish you could make.
 
-Neither is on CRAN. They live on Miles' r-universe, which is an ordinary website that R installs from, so there is no git and no compiler involved:
+Neither is on CRAN. They live on Miles' r-universe, which is an ordinary website that R installs from, so there is no git and no compiler involved.
+
+Try this first:
 
 ```r
 install.packages(
@@ -156,72 +216,132 @@ install.packages(
 )
 ```
 
+If that is blocked, you can download each package as a file and install it from your own machine. No compiler needed, because r-universe has already built it.
+
+First, get the address of the file you need. Run the following in R, based on your operating system. The example is for `{fnmate}`; for `{tflow}`, swap the package name and version, which are listed at <https://milesmcbain.r-universe.dev>.
+
+::: {.panel-tabset}
+
+## Windows
+
+```r
+paste0(
+  "https://milesmcbain.r-universe.dev/bin/windows/contrib/",
+  substr(getRversion(), 1, 3),
+  "/fnmate_0.2.1.zip"
+)
+```
+
+Open that address in your browser, which downloads the file. Then install it, giving R the path to where it landed:
+
+```r
+install.packages(
+  "C:/Users/you/Downloads/fnmate_0.2.1.zip",
+  repos = NULL
+)
+```
+
+## Mac
+
+```r
+arch <- if (R.version$arch == "aarch64") "big-sur-arm64" else "big-sur-x86_64"
+
+paste0(
+  "https://milesmcbain.r-universe.dev/bin/macosx/", arch, "/contrib/",
+  substr(getRversion(), 1, 3),
+  "/fnmate_0.2.1.tgz"
+)
+```
+
+Open that address in your browser, then:
+
+```r
+install.packages("~/Downloads/fnmate_0.2.1.tgz", repos = NULL)
+```
+
+## Linux
+
+On Linux there is no binary, so you want the source and a working toolchain, which you have almost certainly already got:
+
+```r
+install.packages(
+  "https://milesmcbain.r-universe.dev/src/contrib/fnmate_0.2.1.tar.gz",
+  repos = NULL,
+  type = "source"
+)
+```
+
+:::
+
 ::: {.callout-important title="It's OK if these don't install"}
 
-Some machines will not install from anywhere except CRAN, and if yours is one of them, that's a setting somebody else chose and not a problem with you.
+Some machines will not install from anywhere except CRAN, and if yours is one of them, that is a setting somebody else chose and not a problem with you.
 
-Nothing in this course depends on either package. They save typing. Everywhere I use one, I will also show what it wrote, so you can type the same thing yourself.
+Nothing in this course depends on either package. They save typing, and they are nice things to know exist. Everywhere I use one, I will also show what it wrote, so you can type the same thing yourself.
+
+Please do email me if you hit this, because I would like to know how common it is.
 
 :::
 
 ### Checking it all worked
 
+Run this in R. It should print `TRUE` for everything except possibly `tflow` and `fnmate`.
+
 ```r
 pkgs <- c(
-  "arrow", "broom", "conflicted", "crew", "fs", "geotargets", "gganimate",
-  "gifski", "here", "janitor", "leaflet", "ozmaps", "quarto", "sf",
-  "tarchetypes", "targets", "terra", "tidyverse", "visdat", "visNetwork"
+  "arrow", "conflicted", "crew", "fnmate", "fs", "geodist", "geotargets",
+  "here", "janitor", "ozmaps", "quarto", "sf", "tarchetypes", "targets",
+  "terra", "tflow", "tidyverse", "visdat", "visNetwork"
 )
 
 sapply(pkgs, requireNamespace, quietly = TRUE)
 ```
 
-Everything should come back `TRUE`.
+If that looks right, you are set.
+
+### If something will not install
+
+Let me know!
+
+Installation problems are almost always specific to one machine, and they are much faster to solve with two people looking at them. They are also, genuinely, not a reflection on you. Every one of us has lost an afternoon to a package that would not build. Ask me for some horror stories.
 
 ## The course data and the analysis
 
-We work on cane toad occurrence records from the [Atlas of Living Australia](https://www.ala.org.au), plus eleven other species we meet later.
+We work on cane toad occurrence records from the [Atlas of Living Australia](https://www.ala.org.au).
 
-The analysis lives in its own repository, [toad-analysis](https://github.com/njtierney/toad-analysis). This code from `usethis` downloads it and opens it as an RStudio project:
+This course is heavy on writing code yourself. Rather than downloading a finished analysis at the start, you'll build it up as we go. I'll send you the data and the scripts at the point in each session where you need them, and you type, run and change them from there.
 
-```r
-usethis::use_course("njtierney/toad-analysis")
-```
+The analysis I work from lives in its own repository, [toad-analysis](https://github.com/njtierney/toad-analysis), and you're welcome to look at it.
 
-If that doesn't work on your machine, the same files are in this zip — clicking the link should download it: <https://github.com/njtierney/toad-analysis/archive/refs/heads/main.zip>
+::: {.callout-warning title="Watch out: toad-analysis is changing"}
 
-Unzip it, and open `toad-analysis` as an RStudio project. It looks like this:
+This is the first time this course has run, and `toad-analysis` will change constantly while it does. What's there today may not match what's there next week, or what we did in the last session.
+
+Treat it as something to look at, not something to build on. The code you write in the sessions is the code that matters.
+
+:::
+
+It looks like this:
 
 ```
 toad-analysis/
 ├── data/
 │   ├── cane-toad-wildnet-to-1999.parquet
 │   ├── cane-toad-wildnet-to-2010.parquet
-│   ├── cane-toad-wildnet.parquet
-│   ├── cane-toad-all.parquet
 │   └── ...
 ├── ch1/
-│   └── 01-flat-script.R
+│   ├── 01-flat-script.R
+│   ├── 01-flat-doc.qmd
+│   └── ch1-targets/
 ├── ch2/
-│   ├── R/
-│   ├── analysis.R
-│   └── toad-report.qmd
 └── ...
 ```
 
-There is one folder for each chapter, and each is the same analysis a little further along. The data is shared between all of them.
+There is one folder for each chapter. Each one is the same analysis, a step further along: a script, the same thing as a Quarto document, and in some chapters the same thing again as a targets pipeline. The data is shared between all of them.
 
-Nine data files, because chapter 1 is about what happens when more data arrives. You start with the Queensland records up to 1999 and change the filename when the rest turns up — first more years, then more sources.
+We start with the Queensland records up to 1999, and more data turns up as the course goes on.
 
-That is a working analysis, and it is yours.
-
-Run it, read it, break it, improve it.
-
-We spend the whole course changing it, and by the end it will be a pipeline.
-
-The data is parquet rather than CSV, which is why it is small enough to hand out.
-
-`arrow::read_parquet()` reads one and gives you back an ordinary data frame.
+The data is parquet rather than CSV, which is why it is small enough to hand out. `arrow::read_parquet()` reads one and gives you back an ordinary data frame.
 
 ::: {.callout-tip title="Going deeper: where the data came from" collapse="true"}
 
@@ -237,8 +357,8 @@ Records under a non-commercial licence have been removed, so what you have is a 
 
 **An analysis of your own.**
 
-Something with more than one step. Something where you have caught yourself re-running the whole thing because you were not sure what was still current. It doesn't need to be tidy, and it's more useful to me if it isn't.
+Something with more than one step. Something where you have caught yourself re-running the whole thing because you were not sure what was still current. It doesn't need to be tidy, and honestly it's more useful to me if it isn't.
 
-We convert your own work in the final session, and you will get more from that hour than from any example I could invent, because you already care about the answer.
+We convert your own work in the final session, and you will get more out of that hour than any example I could invent, because you already care about the answer.
 
-If you'd rather not share your own, that's completely fine. I have one for us to work on either way.
+If you'd rather not share your own, that's completely fine. I have an analysis for us to work on either way.
