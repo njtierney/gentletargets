@@ -44,6 +44,18 @@ knitr::read_chunk("ch1/01-flat-script.R")
 
 _Photo by [Brian Gratwicke](https://www.flickr.com/photos/briangratwicke/) Found on [wikimedia](https://commons.wikimedia.org/wiki/File:Adult_Cane_toad.jpg), licensed under [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/deed.en)_
 
+:::{.callout-note title="Your Turn: Discussion on pipelines and reproducibility"}
+
+Let's discuss:
+
+- What do you know about reproducibility? What do you think of when you hear "reproducibility"?
+- Have you heard of pipelines before?
+- What sort of issues have you encountered with reproducibility?
+- What are you hoping to get out of this course?
+- What are your concerns with applying this material?
+
+:::
+
 ## Why pipelines?
 
 Data analysis is iterative. Cleaning, exploring and modelling rarely run start to finish without problems. Every step forward you take, sometimes takes you a couple back. E.g., finding a problem in a plot takes you to a problem with data cleaning.

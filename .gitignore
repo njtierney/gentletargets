@@ -17,3 +17,4 @@ libs/
 *.html
 
 **/*.quarto_ipynb
+AGENTS.md

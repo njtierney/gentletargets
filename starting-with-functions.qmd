@@ -32,8 +32,10 @@ Last session you had a script that gave three different answers and no way to te
 library(dplyr)
 library(ggplot2)
 library(arrow)
-library(broom)
-for (f in list.files("R", full.names = TRUE)) source(f)
+library(geodist)
+library(janitor)
+library(lubridate)
+for (f in list.files("ch2/R", full.names = TRUE)) source(f)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>", message = FALSE)
 ```
 
@@ -114,36 +116,51 @@ Write out your own analysis this way. Just the calls, no bodies, ten minutes.
 Neither of the last two steps exists yet, so let's write them and see what's going on.
 
 ```{r}
-#| label: fit-front
-fit_front <- function(front) {
-  lm(west_reached ~ decade, data = front)
+#| label: front-distances
+front_distances <- function(front) {
+  front |>
+    mutate(
+      km_moved = c(
+        NA,
+        geodist(
+          x = cbind(x = lon, y = lat),
+          sequential = TRUE,
+          measure = "geodesic"
+        )
+      ) /
+        1000,
+      km_per_year = km_moved / 10
+    )
 }
 ```
 
 ```{r}
 #| label: front-speed
-front_speed <- function(model, km_per_degree = 107) {
-  slope <- broom::tidy(model) |>
-    filter(term == "decade") |>
-    pull(estimate)
+front_speed <- function(front) {
+  total_km <- sum(front$km_moved, na.rm = TRUE)
+  elapsed_years <- max(front$decade) - min(front$decade)
 
-  -slope * km_per_degree
+  total_km / elapsed_years
 }
 ```
 
-Two functions rather than one, and that split is deliberate. Fitting a model and reading a number off a model are different jobs, and keeping them apart means you can look at the model itself, which is where you find out whether a straight line was a reasonable thing to ask for.
-
-[{broom}](https://broom.tidymodels.org/) turns a model into a data frame, which beats digging around in `coef()` by name.
+Two functions rather than one, and that split is deliberate. Measuring every step the front took and reducing all of them to a single number are different jobs, and keeping them apart means you can look at the per-decade numbers. That is where you find out the invasion accelerated, which one average rate hides completely.
 
 There are four things going on there, and they are the four I care about most.
 
-**Each does one job.** One fits, one reads. If you cannot say what a function does without using the word "and", you have two functions.
+**Each does one job.** One measures, one summarises. If you cannot say what a function does without using the word "and", you have two functions.
 
-**Everything it needs is an argument.** It doesn't reach out of itself for `front`, and it does not know that 107 came from a decision about longitude at that latitude. Pass things in and the function can be tested, moved, and read on its own.
+**Everything it needs is an argument.** Neither reaches out of itself for `front`. Pass things in and the function can be tested, moved, and read on its own.
 
 **It returns the thing.** The last expression is the answer. It doesn't print it, save it, or set a variable somewhere else and hope.
 
-**The magic number became an argument with a default.** What is `107` doing in the middle of a script? Nobody can question a number that never gets a name. `km_per_degree = 107` is a decision with a name, and you can change it without opening the body.
+**The magic numbers became arguments with defaults.** Look back at `front_by_decade()`:
+
+```r
+front_by_decade <- function(occurrences, north_of = -20, n_front = 10) {
+```
+
+In the flat script those were bare numbers in the middle of a pipeline. What is `-20` doing there? Nobody can question a number that never gets a name. `north_of = -20` is a decision with a name — it says the southern spread into New South Wales is a different front — and you can change it without opening the body.
 
 ```{r}
 #| label: use-front-speed
@@ -152,7 +169,7 @@ occurrences <- read_occurrences("data/cane-toad-all.parquet") |>
 
 occurrences |>
   front_by_decade() |>
-  fit_front() |>
+  front_distances() |>
   front_speed()
 ```
 
