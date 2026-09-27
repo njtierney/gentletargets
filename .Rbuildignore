@@ -3,3 +3,5 @@
 ^README\.qmd$
 ^gentletargets\.Rproj$
 ^data-raw$
+^AGENTS\.md$
+^\.claude$

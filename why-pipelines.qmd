@@ -1,6 +1,10 @@
 # Why pipelines? {#sec-why-pipelines}
 
-In 1935, about 2,400 [cane toads](https://en.wikipedia.org/wiki/Cane_toad) were released into cane fields near Gordonvale, in far north Queensland. They are now most of the way across the top of Australia. This chapter works out how fast they are moving, and uses that to show why you might want a pipeline.
+In this section we will discuss why pipelines are a useful idea. We will use an example analysis of [cane toad](https://en.wikipedia.org/wiki/Cane_toad) data to help motivate this. 
+
+Many Australians, particularly those in Queensland, are familiar with the almost-folklore tale of the cane toad. For the unfamiliar, cane toads were introduced to Australia in 1935 as a form of pest control, to eat the cane beetle, who were eating sugar cane. The cane toad was not very good at eating the cane beetle, who lived near the top of the sugar cane, and the cane toads were poor climbers. The cane toad was a prolific breeder, and quickly spread across wider Queensland. It has severely impacted local fauna, as it has poison glands that will kill most animals. Even it's tadpoles are highly toxic.
+
+So, this analysis follows a story of using various releases of existing cane toad data. Our aim of the analysis is to plot where they are, and work out how fast they are moving.
 
 ::: {.overview}
 
@@ -13,10 +17,10 @@ In 1935, about 2,400 [cane toads](https://en.wikipedia.org/wiki/Cane_toad) were 
 <!-- These map onto the sections below, in order. If you move a section, move its question. -->
 
 - Why would I want a pipeline at all?
-- Where were the cane toads, and where are they now?
-- How do I know if my answer is wrong?
+- Where were the cane toads, and how far did they move?
+- What changes when my script becomes a document?
 - What happens when more data arrives?
-- Which parts of my analysis depend on which other parts?
+- How do I know if my outputs are current?
 
 **What you need this session**
 
@@ -28,263 +32,336 @@ In 1935, about 2,400 [cane toads](https://en.wikipedia.org/wiki/Cane_toad) were 
 ```{r}
 #| label: setup
 #| include: false
-library(dplyr)
-library(ggplot2)
-library(arrow)
-library(readr)
-library(leaflet)
-library(fs)
-lapply(dir_ls("R", glob = "*.R"), source)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>", message = FALSE)
 
-speed_from <- function(records) {
-  front_speed(fit_front(front_by_decade(records)))
-}
+# The code in "Replicate it" comes from the script's `# ---- label ----`
+# sections, so the book always shows what the script says.
+knitr::read_chunk("ch1/01-flat-script.R")
 ```
 
-::: {.callout-note title="IMAGE PLACEHOLDER"}
+![](images/adult-cane-toad.jpg)
 
-Photograph of a cane toad. Something large and unbothered, ideally on a road at night.
-
-:::
+_Photo by [Brian Gratwicke](https://www.flickr.com/photos/briangratwicke/) Found on [wikimedia](https://commons.wikimedia.org/wiki/File:Adult_Cane_toad.jpg), licensed under [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/deed.en)_
 
 ## Why pipelines?
 
-Data analysis is iterative. Cleaning, exploring and modelling rarely run start to finish without a hitch, and each step often sends you back to an earlier one. You find a problem in a plot, and the fix belongs in the cleaning.
+Data analysis is iterative. Cleaning, exploring and modelling rarely run start to finish without problems. Every step forward you take, sometimes takes you a couple back. E.g., finding a problem in a plot takes you to a problem with data cleaning.
 
-So you re-run it, usually from the top, because working out which parts actually needed re-running is harder than just doing all of it.
+I find a common pattern then is to re-run the code - from the top. It's easier to just start "carte blanche" each time, because it's too hard to work out hiwch parts of the analysis need re-running.
 
-That works until the analysis gets big enough that re-running it costs real time. Then you start saving intermediate results by hand, and now you have a second problem: when you change a cleaning step, which of those saved results are still true?
+This can be fine. If you're lucky! Often times your analysis can be so big - in terms of taking time, or managing complexity, that re-running it costs real time.
 
-Pipeline tools solve this. They watch which code and which files changed, and run only the parts that depend on them. [targets](https://books.ropensci.org/targets/) is one of them, and it is what this course is about.
+So then you start saving the intermediate steps. Now you have another problem...how do you know when to re-run one part of the analysis, which other parts depend upon changes to another?
 
-The rest of this chapter is the problem, not the tool. We will write a small analysis, get the answer wrong twice, and finish with a question you can't answer by reading your own code.
+This class of problems is what pipeline tools are designed to solve. They watch which files change, and which part of the code depends on those files. Then, they can run only the parts that depend upon them.
 
-::: {.callout-note title="IMAGE PLACEHOLDER"}
+In R, [targets](https://books.ropensci.org/targets/) is one of these pipeline toolkits, and it's what we will be learning how to use.
 
-Animated map of the toad invasion, 1935 to 2025, one frame per decade. Needs `gganimate` and `gifski`, neither currently installed.
+The rest of this chapter is mostly hands-on programming. We will start with some toad data.
 
-:::
+## Live coding
+
+- Reading in cane toad data
+- Exploring it
+- Save the script
 
 ## The question
 
-Toads were released at one place, on one date, and they spread west. So there is a number that describes them: how many kilometres a year does the western edge move?
+Toads were released at one place, on one date, and they spread west. So how far west did the edge get, decade by decade, and how far did it move each time?
 
-Your boss has sent you `cane-toad-to-1999.parquet`. There's more, and it'll turn up later.
+Somebody has emailed you some files: A script, and some data. 
 
-## A first answer
+## Replicate it
 
-```{r}
-#| label: first-answer
-occ <- read_occurrences("data/cane-toad-to-1999.parquet")
+Below you can view the entire analysis that I will live code:
 
-front <- front_by_decade(occ)
+::: {.callout-note title = "The live code", collapse="true"}
 
-km_per_year <- front_speed(fit_front(front))
-km_per_year
-```
-
-`front_by_decade()` finds the westernmost record reached by the end of each decade. The model is a straight line through those points, and its slope is the speed. A degree of longitude is about 107 km up there, which is where that number comes from.
+Here's the script, a piece at a time. The code below is read straight out of `ch1/01-flat-script.R`, so what you see here is what's in the file.
 
 ```{r}
-#| label: fig-first-front
-#| fig-cap: "The front as the first answer sees it. Orange is the fitted line."
-plot_front(front)
+#| label: read
 ```
 
-So `r round(km_per_year, 1)` kilometres a year, from `r format(nrow(occ), big.mark = ",")` records.
+One row is one report of one species, at one place, on one date. It isn't a survey, and it isn't a count. Somebody saw a toad and wrote it down.
 
-::: {.callout-note title="Your Turn"}
+The column names are long, and they are in camel case. `{janitor}` tidies them up.
 
-1. Run the analysis and check you get the same number.
-2. Look at the plot. Does anything about that line bother you?
+```{r}
+#| label: names
+```
+
+Then shorter names for the columns we use most, and a year and a decade to group by.
+
+```{r}
+#| label: tidy
+```
+
+### What have we got?
+
+Before trusting anything that comes out of this, look at it.
+
+```{r}
+#| label: look
+```
+
+```{r}
+#| label: over-time
+```
+
+That's how often somebody wrote a toad down, not how many toads there were. More records in the 1990s mostly means more people looking.
+
+### Where are they?
+
+First, just the points. Then the points on a map of Australia.
+
+```{r}
+#| label: map-first-look
+```
+
+They're all in one state, so zoom in on Queensland.
+
+```{r}
+#| label: map-qld
+```
+
+You can watch them come down the coast and head inland.
+
+### Find the front
+
+The front is the westernmost record in each decade. Longitude gets smaller as you go west, so that's the smallest `lon`.
+
+```{r}
+#| label: front
+```
+
+```{r}
+#| label: front-map
+```
+
+### How far did it move?
+
+`{geodist}` measures distances across the surface of the earth, in metres. It takes a matrix of coordinates.
+
+`sequential = TRUE` measures from each row to the next, rather than every row to every other row. There's no step into the first decade, so `pad = TRUE` puts an `NA` there.
+
+```{r}
+#| label: distance
+```
+
+The 1960s are the big one, at about `r round(toad_speed$distance_km[toad_speed$decade == 1960])` km.
+
+Look closely at the 1990s, though. The westernmost record is further *east* than it was in the 1980s, and the distance is still positive. A distance doesn't know which way it went.
 
 :::
 
-### Takehomes
-
-- One row is one report of one species, at one place, at one time
-- `front_by_decade()` gives the westernmost record reached by each decade
-- The slope of a line through those points is a speed
-- Nothing errored
-
-## Ninety-six kilometres a year
-
-Toads don't move at 96 kilometres a year.
-
-It's hard to be sure of that from the number alone, so put the records on a map instead.
-
-```{r}
-#| label: fig-world
-#| fig-cap: "Every record in the file. The map fits to the data."
-map_occurrences(occ)
-```
-
-Two of those records are not in Australia. One is in the middle of the Pacific and one is in South America.
-
-```{r}
-#| label: count-outside
-occ |>
-  filter(!between(decimalLongitude, 112, 154) | !between(decimalLatitude, -44, -9)) |>
-  nrow()
-```
-
-Fifty-one records sit outside Australia, and they are a sign or a decimal place lost somewhere upstream. The analysis takes the *westernmost* record, so a single toad at longitude -170 puts the front two thirds of the way around the world.
-
-Drop anything outside Australia and run it again.
-
-```{r}
-#| label: coords-fixed
-in_australia <- occ |>
-  filter(between(decimalLongitude, 112, 154), between(decimalLatitude, -44, -9))
-
-speed_from(in_australia)
-```
-
-`r round(speed_from(in_australia), 1)` kilometres a year.
-
 ::: {.callout-note title="Your Turn"}
 
-1. Add the coordinate filter and re-run.
-2. You now have two different answers from the same file. Which one is saved in `output/`?
-3. How would you find out?
+1. Run the script top to bottom. Do you get the same distances?
+2. Which decade moved furthest? Find it on the map.
+3. The front is a single record each decade. What could go wrong with that?
 
 :::
 
-### Takehomes
+## From a script to a document
 
-- Fifty-one records out of `r format(nrow(occ), big.mark = ",")` moved the answer by a factor of twenty
-- A map found them and the number did not
-- Both answers were written to the same file, and the second overwrote the first
+Someone wants to read this! Can you convert this into a quarto document?
 
-## Four point seven kilometres a year
-
-Toads don't move that slowly either.
-
-Look at the dates this time, and count anything earlier than 1935.
-
-```{r}
-#| label: count-dates
-occ |>
-  filter(year < 1935) |>
-  count(year)
-```
-
-Forty-one records are dated 1770, and three are dated 1900. The toads arrived in 1935. These records can't be right, and they anchor the start of the line to a point where the species was not in the country.
-
-They are `r round(100 * sum(occ$year < 1935, na.rm = TRUE) / nrow(occ), 1)`% of the file.
-
-```{r}
-#| label: fully-cleaned
-clean <- clean_occurrences(occ)
-speed_from(clean)
-```
-
-`r round(speed_from(clean), 1)` kilometres a year. That agrees with what you get from all ninety years of data, so the small file gives the right answer once it's clean.
-
-```{r}
-#| label: fig-clean-front
-#| fig-cap: "The same front, after cleaning. The 1770 records were holding the left end down."
-plot_front(front_by_decade(clean))
-```
+So put it in a Quarto document. Each part of the script goes in a chunk, with a sentence or two around it saying what it does.
 
 ::: {.callout-note title="Your Turn"}
 
-In pairs, and without running anything:
-
-1. You changed the cleaning twice. How many of your saved outputs are correct?
-2. If a colleague opened `output/toad-front.csv` now, which of the three answers would they see?
+Turn `01-flat-script.R` into a Quarto document, and render it.
 
 :::
 
-### Takehomes
+## Tidy it up
 
-- Two bugs, pulling opposite ways. Neither raised an error or a warning
-- `r round(100 * sum(occ$year < 1935, na.rm = TRUE) / nrow(occ), 1)`% of the rows moved the answer by a factor of seven
-- All three answers looked equally plausible on disk
+Now make it read like a document.
 
-## The invasion, by decade
+- **Libraries at the top.** Put all `library()` calls at the top.
+- **Tidy up the iterations.** The `View()`, the `names()` before `clean_names()`, the plot without a map, the plot with the whole of Australia. Those were you working it out. They were useful at the time.
 
-Now that the data is clean, the westward spread we set out to measure is visible.
+Let's make this a shorter, tidy document.
+
+::: {.callout-note title="Your Turn"}
+
+1. Move every `library()` call into one chunk at the top.
+2. Remove the steps that were you exploring.
+3. Render it again. Does it still give the same distances?
+
+:::
+
+## Someone wants the data
+
+Your work is getting noticed!
+
+A colleague asks you for the data with the distances added.
+
+Sure, you say, you can add this to the quarto file?
 
 ```{r}
-#| label: fig-decades
-#| fig-cap: "The front moving west, one panel per decade."
-#| fig-height: 5
-plot_decades(clean)
+#| label: write-csv
+#| eval: false
+write_csv(toad_speed, here("output/toad-speed.csv"))
 ```
+
+Render, and the CSV is there.
+
+::: {.callout-note title="Your Turn"}
+
+Add the `write_csv()` chunk and render.
+
+1. Change a single word in the text and render again. Did the CSV change?
+2. If your colleague opened the CSV tomorrow, how would they know which render wrote it?
+
+:::
+
+## Rendering a document to write a dataset?
+
+It's a lot!
+
+
+But something about this feels a bit strange? You are rendering a document, and you get:
+
+- plots, HTML file
+- a written CSV file
+
+Creating the CSV is a side effect of rendering.
+
+It's only as current as your last render, and renders happen for reasons that have nothing to do with the data:
+
+> Fix a typo in a sentence? CSV gets rewritten.
+> If the render fails halfway, the file might get re-written? Depending on where it is?
+
+And like, how do you know which version of the code produced it? How do you know it is up to date? Can we trust that this data came from the new data? Or is it the old one? Should we just run it again to be sure?
+
+I don't think that rendering a document to save data a good idea.
+
+I'm not saying don't save data! That's a good thing.
+
+But I am saying that writing a file should be a step that something keeps track of, rather than something that happens on the way past.
+
+## How else could you lay this project out?
+
+Is there another way you could lay the project out?
+
+**One long script.** That's what you were sent. It works, and it's where everybody starts.
+
+**Numbered scripts.** Split it into `01-read.R`, `02-clean.R`, `03-front.R` and `04-distance.R`.
+
+- Better! The numbers give the project an entry point. Someone new knows where to start.
+- But they don't tell you what needs running again. Change `02-clean.R`, and you have to remember that 03 and 04 depend on it.
+
+**One Quarto document.** 
+
+- Everything in one place, the report comes for free. 
+
+**Functions, with a driver script.** 
+
+- R functions go in `R/`
+- A short `analysis.R` calls them in order
+
+```
+toad-analysis/
+├── data/          what arrived, never edited by hand
+├── R/             functions: code that gets used
+├── analysis.R     code that gets run, in order
+└── output/        anything you could delete and make again
+```
+
+This is my favourite. We'll talk about it more later.
+
+### How to pick a good one
+
+Your system is good, if you can answer this:
+
+> Can you delete output/ and make all of it again by running your code?
+
+For every layout above, the answer is yes. With a caveat: only you know how.
+
+> Your project might not be perfectly organised, but it should be possible for someone to understand how it is structured, and what to run first.
+
+::: {.callout-note title="Read more"}
+
+This section is adapted from the [project organisation chapter](https://r-best-practices.njtierney.com/project-organisation.html) of R Best Practices, which goes through each of these layouts, and a few more, in detail.
+
+:::
 
 ## More data arrives
 
-Your boss sends `cane-toad-from-2000.parquet`. Change the filename and run it again.
+Your boss (me) emails you the records up to 2010, `cane-toad-wildnet-to-2010.parquet`.
+
+Can you run it again?
+
+## Stop
+
+Stop here, and look at what's on your disk.
+
+You have a script, a document, a rendered report, and a CSV. Some of them were made from the 1999 data and some from the 2010 data.
+
+::: {.callout-note title="Your Turn"}
+
+In pairs, and without running anything.
+
+1. Does `output/toad-speed.csv` have seven decades in it, or nine?
+2. Is the rendered report from the same run as the CSV?
+3. How would you find out, without rendering everything again?
+
+:::
+
+Nothing errored at any point. Every file looks fine. You just can't tell which of them are current.
+
+## What does a pipeline look like?
+
+Here's one I prepared earlier.
+
+`ch1/ch1-targets/`, written as a targets pipeline.
 
 ```{r}
-#| label: later-data
-later <- read_occurrences("data/cane-toad-from-2000.parquet")
-nrow(later)
+#| label: targets-file
+#| file: ch1/ch1-targets/_targets.R
+#| eval: false
 ```
 
-Then run it again on `cane-toad-all.parquet`, which is everything there is.
+Each step is a target, with a name. 
 
-::: {.callout-note title="Your Turn"}
+The `targets` package works out which ones depend on which, and when something changes it reruns only those.
 
-Run the analysis on each of the three files.
+You never have to work out what to run first. The answer is always `tar_make()`.
 
-1. What happens to the speed?
-2. What happened to `output/toad-front.csv` each time?
+Over the rest oif the course we will focus on these key ideas:
 
-:::
+- **Functions.** Each step of the analysis does one job.
 
-Each of those runs redid the cleaning, the front, the model and both plots. That's fine, because the whole thing takes about a second.
+- **Results worth keeping.** Each target gets saved, and is only built again when something it depends on changes.
 
-But you changed one filename and re-ran everything underneath it, because you had no way of knowing which parts of the analysis that filename touched.
-
-## The question we cannot answer
-
-**Which steps depended on the line you changed?**
-
-It's a nine line script and you've run it five times.
-
-::: {.callout-note title="Your Turn"}
-
-In pairs, take the change from `cane-toad-to-1999.parquet` to `cane-toad-all.parquet`, and write down which steps have to run again and which do not.
-
-Then compare with your neighbour. Did you agree?
-
-:::
-
-You can work it out, but you had to hold all of it in your head, and I suspect you disagreed with your neighbour somewhere. Now imagine three hundred lines, written four months ago, behind a paper you are revising.
-
-## What targets does about it
-
-[targets](https://books.ropensci.org/targets/) works out what depends on what, so you don't have to.
-
-Three ideas carry the rest of this course, and you have already used all three.
-
-**Functions.** `read_occurrences()`, `front_by_decade()` and `plot_front()` each do one named job. There's loose code around them doing other jobs.
-
-**Cached results.** `front` took work to build. You built it five times from data that had not changed.
-
-**The dependency graph.** The thing you just tried to assemble in your head. It's a real object, and targets will draw it for you.
+- **The dependency graph.** Which steps depended on the file you changed? That question has an answer, it's a real object, and `targets` will draw it for you.
 
 ::: {.callout-tip title="Where we are going"}
 
-By the end of this course you will change one line in a cleaning function, run `tar_make()`, and watch the things that depend on it rebuild while everything else stays put.
+By the end of this course you'll change one line in a cleaning function, run `tar_make()`, and watch the things that depend on it rebuild while everything else stays put.
 
 :::
 
+## But first: your code
+
+We won't jump straight into targets, not yet!
+
+There are mechanics to it, and tools of the trade, and introducing all of it now would be too much at once.
+
+So let's start somewhere smaller. Next session we take the script apart and rebuild it as functions.
+
 ## Summary {.unnumbered}
 
-1. **The question is how fast the front moves west.** Everything else serves that.
-2. **You got three answers from one file**, and all three looked reasonable.
-3. **Fifty-one records outside Australia** made the toads twenty times faster. A map found them.
-4. **Forty-four impossible dates** made them seven times slower.
-5. **Nothing errored.** Wrong answers arrive quietly and overwrite right ones.
-6. **Functions, cached results, and the dependency graph** are the three things this course is about.
-
-Next session we take this script apart and rebuild it as functions.
+1. **You replicated an analysis** from a script and a data file.
+2. **A document is for reading.** Libraries at the top, and the exploring taken out.
+3. **A document that writes files** has side effects you cannot see from the files.
+4. **Functions, results worth keeping, and the dependency graph** are the three things this course is about.
 
 ::: {.callout-note title="Where this comes from"}
+
+The section on laying out an analysis draws on [R Best Practices](https://r-best-practices.njtierney.com), which covers project organisation, file paths and naming in more depth.
 
 The function-writing and debugging sessions draw on [Introduction to Functions and Debugging](https://fun2debug.njtierney.com), which covers both in more depth.
 

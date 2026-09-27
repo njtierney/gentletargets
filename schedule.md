@@ -7,9 +7,10 @@ Eight chapters, ninety minutes each. The course is exercise heavy, so most of th
 *90 minutes*
 
 - Where do I start? What do I run first?
-- Common problems with pipelines and workflows
-- Working with occurrence records: reading, cleaning, mapping with {leaflet}
-- Finding out that your answer was wrong, twice
+- Working with occurrence records: reading and cleaning
+- What happens when more data arrives
+- Why a document that writes files cannot be trusted
+- Common problems with pipelines and workflows, and the ways people lay an analysis out
 - Concepts in {targets}: functions, results worth keeping, graphs and networks
 - Where we are going
 

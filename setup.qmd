@@ -182,29 +182,36 @@ Everything should come back `TRUE`.
 
 We work on cane toad occurrence records from the [Atlas of Living Australia](https://www.ala.org.au), plus eleven other species we meet later.
 
-You don't need to clone anything or sign up anywhere. Download the analysis from this site:
+The analysis lives in its own repository, [toad-analysis](https://github.com/njtierney/toad-analysis). This code from `usethis` downloads it and opens it as an RStudio project:
 
-- <https://gentle-targets.njtierney.com/download/toad-analysis.zip>
+```r
+usethis::use_course("njtierney/toad-analysis")
+```
+
+If that doesn't work on your machine, the same files are in this zip — clicking the link should download it: <https://github.com/njtierney/toad-analysis/archive/refs/heads/main.zip>
 
 Unzip it, and open `toad-analysis` as an RStudio project. It looks like this:
 
 ```
 toad-analysis/
-├── R/
-│   ├── clean_occurrences.R
-│   ├── fit_front.R
-│   ├── front_by_decade.R
-│   ├── map_occurrences.R
-│   └── ...
 ├── data/
-│   ├── cane-toad-to-1999.parquet
-│   ├── cane-toad-from-2000.parquet
-│   └── cane-toad-all.parquet
-├── analysis.R
-└── toad-report.qmd
+│   ├── cane-toad-wildnet-to-1999.parquet
+│   ├── cane-toad-wildnet-to-2010.parquet
+│   ├── cane-toad-wildnet.parquet
+│   ├── cane-toad-all.parquet
+│   └── ...
+├── ch1/
+│   └── 01-flat-script.R
+├── ch2/
+│   ├── R/
+│   ├── analysis.R
+│   └── toad-report.qmd
+└── ...
 ```
 
-Three data files, because chapter 1 is about what happens when more data arrives. You start with the records up to 1999 and change the filename when the rest turns up.
+There is one folder for each chapter, and each is the same analysis a little further along. The data is shared between all of them.
+
+Nine data files, because chapter 1 is about what happens when more data arrives. You start with the Queensland records up to 1999 and change the filename when the rest turns up — first more years, then more sources.
 
 That is a working analysis, and it is yours.
 

@@ -1,13 +1,9 @@
 project:
   type: book
   output-dir: docs
-  # The whole analysis is zipped and copied into docs/, so it is downloadable
-  # straight from gentle-targets.njtierney.com/download/. A plain HTTPS download
-  # from the course site people are already reading beats cloning a repo on the
-  # day. pre-render rebuilds the zip every time, so it cannot drift.
-  pre-render: build-download.R
-  resources:
-    - download/
+  # The analysis is its own repository, github.com/njtierney/toad-analysis, and
+  # arrives here as a submodule. Students get it with usethis::use_course() or
+  # GitHub's zip.
 
 # Applied to every chapter. linkate collects each chapter's links and lists them
 # at the end. overview-box.lua is the LaTeX half of the chapter overview box and
